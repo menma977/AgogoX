@@ -1,33 +1,23 @@
 package id.co.agogo
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
-import id.co.agogo.dialog.BottomPopUpNavigationMenu
 
-class LoginActivity : AppCompatActivity(), BottomPopUpNavigationMenu.EditTextChangeListener {
-    override fun onEditTextChange(text: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    private lateinit var version: TextView
-    private lateinit var username: EditText
-    private lateinit var password: EditText
+class MainActivity : AppCompatActivity() {
     private lateinit var login: Button
-
+    private lateinit var version: TextView
     private var versionName: String = "0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_main)
 
-        version = findViewById(R.id.version)
-        username = findViewById(R.id.username)
-        password = findViewById(R.id.password)
         login = findViewById(R.id.loginButton)
+        version = findViewById(R.id.version)
 
         versionName = try {
             val pInfo = this.packageManager.getPackageInfo(packageName, 0)
@@ -39,11 +29,9 @@ class LoginActivity : AppCompatActivity(), BottomPopUpNavigationMenu.EditTextCha
 
         version.text = versionName
 
-        username.requestFocus()
-
         login.setOnClickListener {
-            val popUpDialog = BottomPopUpNavigationMenu()
-            popUpDialog.show(supportFragmentManager, "Password TRX")
+            val goTo = Intent(this, LoginActivity::class.java)
+            startActivity(goTo)
         }
     }
 }
