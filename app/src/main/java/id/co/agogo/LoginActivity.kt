@@ -10,7 +10,9 @@ import id.co.agogo.dialog.BottomPopUpNavigationMenu
 
 class LoginActivity : AppCompatActivity(), BottomPopUpNavigationMenu.EditTextChangeListener {
     override fun onEditTextChange(text: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (text.isNotEmpty()) {
+
+        }
     }
 
     private lateinit var version: TextView

@@ -52,6 +52,7 @@
             android:hint="@string/username"
             android:inputType="textPersonName"
             android:minHeight="40dp"
+            android:padding="15dp"
             android:textAlignment="center"
             android:textColor="@color/textPrimaryCustom" />
 
@@ -69,6 +70,7 @@
             android:hint="@string/password"
             android:inputType="textPassword"
             android:minHeight="40dp"
+            android:padding="15dp"
             android:textAlignment="center"
             android:textColor="@color/textPrimaryCustom" />
 

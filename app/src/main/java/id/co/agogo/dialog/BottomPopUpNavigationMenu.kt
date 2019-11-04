@@ -2,15 +2,16 @@ package id.co.agogo.dialog
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.EditText
+import androidx.core.os.postDelayed
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import id.co.agogo.R
-import java.util.*
-import kotlin.concurrent.schedule
 
 class BottomPopUpNavigationMenu : BottomSheetDialogFragment() {
     private var editTextChangeListener: EditTextChangeListener? = null
@@ -23,14 +24,16 @@ class BottomPopUpNavigationMenu : BottomSheetDialogFragment() {
     ): View? {
         val view = inflater.inflate(R.layout.botttom_pop_up_navigation_menu, container, false)
         imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        val passwordTRX = view.findViewById<EditText>(R.id.password_trx)
-        Timer().schedule(500) {
+        val passwordTRX: EditText = view.findViewById(R.id.password_trx)
+        val login: Button = view.findViewById(R.id.loginButton)
+        Handler().postDelayed(500) {
             passwordTRX.requestFocus()
             imm.showSoftInput(passwordTRX, InputMethodManager.SHOW_IMPLICIT)
         }
-        passwordTRX.setOnClickListener {
+
+        login.setOnClickListener {
             try {
-                Timer().schedule(500) {
+                Handler().postDelayed(500) {
                     passwordTRX.clearFocus()
                     imm.hideSoftInputFromWindow(passwordTRX.windowToken, 0)
                 }
