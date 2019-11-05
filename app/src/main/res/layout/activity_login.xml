@@ -11,11 +11,26 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/colorPrimaryDark"
+            android:visibility="visible" />
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/ic_launcher_foreground"
+            android:backgroundTint="@color/colorPrimary" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="50dp"
             android:layout_marginEnd="20dp"
             android:text="@string/app_name"
             android:textAlignment="center"
@@ -36,7 +51,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="250dp" />
+            android:layout_height="200dp" />
 
         <EditText
             android:id="@+id/username"
@@ -46,6 +61,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="50dp"
             android:layout_marginBottom="10dp"
+            android:autofillHints="@string/username"
             android:background="@drawable/edit_text_custom"
             android:elevation="10dp"
             android:ems="10"
@@ -54,7 +70,8 @@
             android:minHeight="40dp"
             android:padding="15dp"
             android:textAlignment="center"
-            android:textColor="@color/textPrimaryCustom" />
+            android:textColor="@color/textPrimaryCustom"
+            tools:targetApi="o" />
 
         <EditText
             android:id="@+id/password"
@@ -64,6 +81,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="50dp"
             android:layout_marginBottom="10dp"
+            android:autofillHints="@string/password"
             android:background="@drawable/edit_text_custom"
             android:elevation="10dp"
             android:ems="10"
@@ -72,7 +90,8 @@
             android:minHeight="40dp"
             android:padding="15dp"
             android:textAlignment="center"
-            android:textColor="@color/textPrimaryCustom" />
+            android:textColor="@color/textPrimaryCustom"
+            tools:targetApi="o" />
 
         <Button
             android:id="@+id/loginButton"
@@ -85,7 +104,7 @@
             android:background="@drawable/button_custom"
             android:elevation="10dp"
             android:minWidth="100dp"
-            android:text="Login"
+            android:text="@string/login"
             android:textColor="@color/textPrimary" />
 
     </LinearLayout>

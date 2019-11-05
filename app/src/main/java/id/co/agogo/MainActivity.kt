@@ -30,7 +30,8 @@ class MainActivity : AppCompatActivity() {
         version.text = versionName
 
         login.setOnClickListener {
-            val goTo = Intent(this, LoginActivity::class.java)
+            val goTo = Intent(this, HomeActivity::class.java)
+            finishAndRemoveTask()
             startActivity(goTo)
         }
     }

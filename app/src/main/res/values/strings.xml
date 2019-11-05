@@ -5,7 +5,30 @@
     <string name="loading_massage">Loading…</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="register">Pendaftaran</string>
     <string name="password_trx">Password TRX</string>
     <string name="logo">Logo</string>
     <string name="icon">Icon</string>
+    <string name="your_balance">Saldo Sanda</string>
+    <string name="default_balance">Rp0</string>
+    <string name="more">Lihat Semua</string>
+    <string name="phone_number">Nomor Telfon</string>
+    <string name="phone_number_example">EX(081000000000)</string>
+    <string name="package_pulsa"> Paket Pulsa</string>
+    <string name="package_data"> Paket Data</string>
+
+    <!-- ppob -->
+    <string name="pln">pln</string>
+    <string name="pulsa">pulsa</string>
+    <string name="pulsa_pascabayar">Pulsa Pascabayar</string>
+    <string name="tv_kabel">TV Kabel</string>
+    <string name="go_pay">GoPay</string>
+    <string name="grab">Grab</string>
+    <string name="ovo">OVO</string>
+    <string name="dana">DANA</string>
+    <string name="asuransi">Asuransi</string>
+    <string name="bpjs">BPJS</string>
+    <string name="finance">Finance</string>
+    <!-- /ppob -->
 </resources>
