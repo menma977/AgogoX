@@ -4,7 +4,7 @@
         <shape android:padding="10dp" android:shape="rectangle">
             <solid android:color="@color/colorPrimaryLight" />
             <!-- this one is ths color of the Rounded Button -->
-            <corners android:radius="25dp" />
+            <corners android:radius="10dp" />
             <stroke android:width="2dp" android:color="@color/textSecondary" />
         </shape>
     </item>
@@ -12,7 +12,7 @@
         <shape android:padding="10dp" android:shape="rectangle">
             <solid android:color="@color/colorPrimaryLight" />
             <!-- this one is ths color of the Rounded Button -->
-            <corners android:radius="25dp" />
+            <corners android:radius="10dp" />
             <stroke android:width="2dp" android:color="@color/textSecondary" />
         </shape>
     </item>
@@ -20,7 +20,7 @@
         <shape android:padding="10dp" android:shape="rectangle">
             <solid android:color="@color/Default" />
             <!-- this one is ths color of the Rounded Button -->
-            <corners android:radius="25dp" />
+            <corners android:radius="10dp" />
             <stroke android:width="2dp" android:color="@color/textSecondary" />
         </shape>
     </item>

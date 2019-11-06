@@ -17,6 +17,8 @@
     <string name="phone_number_example">EX(081000000000)</string>
     <string name="package_pulsa"> Paket Pulsa</string>
     <string name="package_data"> Paket Data</string>
+    <string name="error_404">Koneksi Terputus atau tidak ada jarignan internet</string>
+    <string name="error_Debug">Data tidak terload secara normal mohon ualngi lagi</string>
 
     <!-- ppob -->
     <string name="pln">pln</string>
