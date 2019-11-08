@@ -1,14 +1,23 @@
 package id.co.agogo
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ProgressBar
+import android.widget.Toast
 import id.co.agogo.ppob.pulsa.PulsaActivity
 import java.util.*
 import kotlin.concurrent.schedule
+import java.net.InetAddress
+import android.content.Context.CONNECTIVITY_SERVICE
+import androidx.core.content.ContextCompat.getSystemService
+import android.net.ConnectivityManager
+import androidx.core.app.ComponentActivity.ExtraData
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
 
 class HomeActivity : AppCompatActivity() {
 
@@ -43,13 +52,27 @@ class HomeActivity : AppCompatActivity() {
         }
 
         pulsa.setOnClickListener {
-            goTo = Intent(this, PulsaActivity::class.java)
-            startActivity(goTo)
+            if (isNetworkConnected()) {
+                goTo = Intent(this, PulsaActivity::class.java)
+                startActivity(goTo)
+            } else {
+                Toast.makeText(
+                    this,
+                    "anda berada di koenksi yang tidak setabil",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
         more.setOnClickListener {
             goTo = Intent(this, MoreActivity::class.java)
             startActivity(goTo)
         }
+    }
+
+    private fun isNetworkConnected(): Boolean {
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        return cm.activeNetworkInfo != null && cm.activeNetworkInfo.isConnected
     }
 }

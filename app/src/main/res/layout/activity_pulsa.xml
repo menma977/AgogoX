@@ -46,51 +46,67 @@
             android:inputType="phone"
             tools:targetApi="o" />
 
+        <Switch
+            android:id="@+id/switchPackage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="10dp"
+            android:switchMinWidth="@android:dimen/thumbnail_width"
+            android:text="@string/package_pulsa"
+            android:textOff="@string/package_pulsa"
+            android:textOn="@string/package_data"
+            android:thumbTint="@color/colorPrimaryDark" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/pulsaButton"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/button_info"
-                android:elevation="20dp"
-                android:text="@string/package_pulsa"
-                android:textColor="@color/textPrimary" />
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/dataButton"
-                android:layout_width="wrap_content"
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/button_default"
+                    android:elevation="20dp"
+                    android:text="@string/app_name"
+                    android:textColor="@color/colorSecondary" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/content1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/button_primary"
-                android:elevation="20dp"
-                android:text="@string/package_data"
-                android:textColor="@color/textPrimary" />
+                android:gravity="center"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/button_default"
+                    android:elevation="20dp"
+                    android:text="@string/app_name"
+                    android:textColor="@color/colorSecondary" />
 
-        <LinearLayout
-            android:id="@+id/content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="vertical">
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/button_default"
-                android:elevation="20dp"
-                android:text="@string/app_name"
-                android:textColor="@color/colorSecondary" />
+            </LinearLayout>
 
         </LinearLayout>
 

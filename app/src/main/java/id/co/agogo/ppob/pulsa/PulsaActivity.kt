@@ -5,11 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import androidx.core.content.ContextCompat
+import android.widget.*
 import androidx.core.widget.doOnTextChanged
 import id.co.agogo.R
 import id.co.agogo.api.HrlController
@@ -55,7 +51,7 @@ class PulsaActivity : AppCompatActivity() {
     private var hrlAXIS = ArrayList<String>()
     private var hrlSMART = ArrayList<String>()
     private var hrlTHREE = ArrayList<String>()
-    private var phoneNumber = "0812000000"
+    private var phoneNumber = "081211610807"
     private var phoneOperator = ""
     private var phoneType = "REGULER"
     private lateinit var progressBar: ProgressBar
@@ -68,16 +64,19 @@ class PulsaActivity : AppCompatActivity() {
         val numberFormat = NumberFormat.getCurrencyInstance(idr)
 
         val phoneTarget: EditText = findViewById(R.id.phoneTargetEditText)
+        val switchPackage: Switch = findViewById(R.id.switchPackage)
         val content: LinearLayout = findViewById(R.id.content)
+        val content1: LinearLayout = findViewById(R.id.content1)
         progressBar = findViewById(R.id.progressBarPulsa)
 
         val optionRow = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            0f
+            LinearLayout.LayoutParams.WRAP_CONTENT
         )
         optionRow.topMargin = 10
         optionRow.bottomMargin = 10
+        optionRow.rightMargin = 5
+        optionRow.leftMargin = 5
 
         progressBar.visibility = ProgressBar.VISIBLE
         window.setFlags(
@@ -86,11 +85,34 @@ class PulsaActivity : AppCompatActivity() {
         )
 
         content.removeAllViews()
+        content1.removeAllViews()
         phoneTarget.setText(phoneNumber)
 
         Timer().schedule(2000) {
-            product = ProductController.GET(phoneNumber, "0").execute().get()
-            hlr = HrlController.GET(phoneNumber).execute().get()
+            try {
+                product = ProductController.GET(phoneNumber, "0").execute().get()
+                hlr = HrlController.GET(phoneNumber).execute().get()
+                if (product.getJSONObject(0).length() <= 2) {
+                    runOnUiThread {
+                        Toast.makeText(applicationContext, R.string.error_404, Toast.LENGTH_LONG)
+                            .show()
+                        finishAndRemoveTask()
+                    }
+                }
+                if (product.getJSONObject(0).length() <= 2) {
+                    runOnUiThread {
+                        Toast.makeText(applicationContext, R.string.error_404, Toast.LENGTH_LONG)
+                            .show()
+                        finishAndRemoveTask()
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                runOnUiThread {
+                    Toast.makeText(applicationContext, R.string.error_404, Toast.LENGTH_LONG).show()
+                    finishAndRemoveTask()
+                }
+            }
 
             for (i in 0 until product.getJSONObject(0).length()) {
                 var operator: String
@@ -253,69 +275,19 @@ class PulsaActivity : AppCompatActivity() {
 
                 when (phoneOperator) {
                     "TELKOMSEL" -> for (i in 0 until productCodeTELKOMSEL.size) {
-                        content.addView(
-                            generateButton(
-                                optionRow,
-                                numberFormat.format(
-                                    "${productCodeTELKOMSEL[i].replace(
-                                        "TELKOMSEL",
-                                        ""
-                                    )}000".toInt()
-                                )
-                            )
-                        )
+                        productSelection(phoneNumber, content, content1, numberFormat, optionRow)
                     }
                     "INDOSAT" -> for (i in 0 until productCodeINDOSAT.size) {
-                        content.addView(
-                            generateButton(
-                                optionRow,
-                                numberFormat.format(
-                                    "${productCodeINDOSAT[i].replace(
-                                        "INDOSAT",
-                                        ""
-                                    )}000".toInt()
-                                )
-                            )
-                        )
+                        productSelection(phoneNumber, content, content1, numberFormat, optionRow)
                     }
                     "XL" -> for (i in 0 until productCodeXL.size) {
-                        content.addView(
-                            generateButton(
-                                optionRow,
-                                numberFormat.format(
-                                    "${productCodeXL[i].replace(
-                                        "XL",
-                                        ""
-                                    )}000".toInt()
-                                )
-                            )
-                        )
+                        productSelection(phoneNumber, content, content1, numberFormat, optionRow)
                     }
                     "SMART" -> for (i in 0 until productCodeSMART.size) {
-                        content.addView(
-                            generateButton(
-                                optionRow,
-                                numberFormat.format(
-                                    "${productCodeSMART[i].replace(
-                                        "SMART",
-                                        ""
-                                    )}000".toInt()
-                                )
-                            )
-                        )
+                        productSelection(phoneNumber, content, content1, numberFormat, optionRow)
                     }
                     "THREE" -> for (i in 0 until productCodeTHREE.size) {
-                        content.addView(
-                            generateButton(
-                                optionRow,
-                                numberFormat.format(
-                                    "${productCodeTHREE[i].replace(
-                                        "THREE",
-                                        ""
-                                    )}000".toInt()
-                                )
-                            )
-                        )
+                        productSelection(phoneNumber, content, content1, numberFormat, optionRow)
                     }
                 }
             }
@@ -326,15 +298,18 @@ class PulsaActivity : AppCompatActivity() {
                 when {
                     text.toString().isEmpty() -> {
                         content.removeAllViews()
+                        content1.removeAllViews()
                     }
                     text.toString().length == 4 -> {
                         content.removeAllViews()
+                        content1.removeAllViews()
                         Timer().schedule(1000) {
                             runOnUiThread {
                                 try {
                                     productSelection(
                                         text.toString(),
                                         content,
+                                        content1,
                                         numberFormat,
                                         optionRow
                                     )
@@ -345,11 +320,39 @@ class PulsaActivity : AppCompatActivity() {
                         }
                     }
                     else -> {
-                        //content.removeAllViews()
+                        //TODO: Add when phone number is remove
                     }
                 }
             } catch (e: Exception) {
                 content.removeAllViews()
+                content1.removeAllViews()
+            }
+        }
+
+        switchPackage.setOnClickListener {
+            if (switchPackage.isChecked) {
+                switchPackage.setText(R.string.package_data)
+                phoneType = "DATA"
+                content.removeAllViews()
+                content1.removeAllViews()
+                productSelection(
+                    phoneTarget.text.toString(),
+                    content,
+                    content1,
+                    numberFormat,
+                    optionRow
+                )
+            } else {
+                switchPackage.setText(R.string.package_pulsa)
+                phoneType = "REGULER"
+                content.removeAllViews()
+                productSelection(
+                    phoneTarget.text.toString(),
+                    content,
+                    content1,
+                    numberFormat,
+                    optionRow
+                )
             }
         }
     }
@@ -367,173 +370,328 @@ class PulsaActivity : AppCompatActivity() {
     private fun productSelection(
         text: String,
         content: LinearLayout,
+        content1: LinearLayout,
         numberFormat: NumberFormat,
         optionRow: LinearLayout.LayoutParams
     ) {
+        content.removeAllViews()
+        content1.removeAllViews()
+        var loop: Int
         when {
             hrlTELKOMSEL.any { target -> text.contains(target) } -> when (phoneType) {
-                "DATA" -> for (i in 0 until productCodeTELKOMSELDATA.size) {
-                    runOnUiThread {
-                        content.addView(
-                            generateButton(
-                                optionRow,
-                                numberFormat.format(
-                                    "${productCodeTELKOMSELDATA[i].replace(
-                                        "TELKOMSEL",
-                                        ""
-                                    )}000".toInt()
+                "DATA" -> {
+                    loop = 2
+                    for (i in 0 until productNameTELKOMSELDATA.size) {
+                        if (i == (loop - 1)) {
+                            runOnUiThread {
+                                content1.addView(
+                                    generateButton(
+                                        optionRow,
+                                        productNameTELKOMSELDATA[i]
+                                    )
                                 )
-                            )
-                        )
+                                loop += 2
+                            }
+                        } else {
+                            runOnUiThread {
+                                content.addView(
+                                    generateButton(
+                                        optionRow,
+                                        productNameTELKOMSELDATA[i]
+                                    )
+                                )
+                            }
+                        }
                     }
                 }
-                else -> for (i in 0 until productCodeTELKOMSEL.size) {
-                    runOnUiThread {
-                        content.addView(
-                            generateButton(
-                                optionRow,
-                                numberFormat.format(
-                                    "${productCodeTELKOMSEL[i].replace(
-                                        "TELKOMSEL",
-                                        ""
-                                    )}000".toInt()
+                else -> {
+                    loop = 2
+                    for (i in 0 until productCodeTELKOMSEL.size) {
+                        if (i == (loop - 1)) {
+                            runOnUiThread {
+                                content1.addView(
+                                    generateButton(
+                                        optionRow,
+                                        numberFormat.format(
+                                            "${productCodeTELKOMSEL[i].replace(
+                                                "TELKOMSEL",
+                                                ""
+                                            )}000".toInt()
+                                        )
+                                    )
                                 )
-                            )
-                        )
+                                loop += 2
+                            }
+                        } else {
+                            runOnUiThread {
+                                content.addView(
+                                    generateButton(
+                                        optionRow,
+                                        numberFormat.format(
+                                            "${productCodeTELKOMSEL[i].replace(
+                                                "TELKOMSEL",
+                                                ""
+                                            )}000".toInt()
+                                        )
+                                    )
+                                )
+                            }
+                        }
                     }
                 }
             }
             hrlINDOSAT.any { target -> text.contains(target) } -> when (phoneType) {
-                "DATA" -> for (i in 0 until productCodeINDOSATDATA.size) {
-                    runOnUiThread {
-                        content.addView(
-                            generateButton(
-                                optionRow,
-                                numberFormat.format(
-                                    "${productCodeINDOSATDATA[i].replace(
-                                        "TELKOMSEL",
-                                        ""
-                                    )}000".toInt()
+                "DATA" -> {
+                    loop = 2
+                    for (i in 0 until productNameINDOSATDATA.size) {
+                        if (i == (loop - 1)) {
+                            runOnUiThread {
+                                content1.addView(
+                                    generateButton(
+                                        optionRow,
+                                        productNameINDOSATDATA[i]
+                                    )
                                 )
-                            )
-                        )
+                                loop += 2
+                            }
+                        } else {
+                            runOnUiThread {
+                                content.addView(
+                                    generateButton(
+                                        optionRow,
+                                        productNameINDOSATDATA[i]
+                                    )
+                                )
+                            }
+                        }
                     }
                 }
-                else -> for (i in 0 until productCodeINDOSAT.size) {
-                    runOnUiThread {
-                        content.addView(
-                            generateButton(
-                                optionRow,
-                                numberFormat.format(
-                                    "${productCodeINDOSAT[i].replace(
-                                        "TELKOMSEL",
-                                        ""
-                                    )}000".toInt()
+                else -> {
+                    loop = 2
+                    for (i in 0 until productCodeINDOSAT.size) {
+                        if (i == (loop - 1)) {
+                            runOnUiThread {
+                                content1.addView(
+                                    generateButton(
+                                        optionRow,
+                                        numberFormat.format(
+                                            "${productCodeINDOSAT[i].replace(
+                                                "INDOSAT",
+                                                ""
+                                            )}000".toInt()
+                                        )
+                                    )
                                 )
-                            )
-                        )
+                                loop += 2
+                            }
+                        } else {
+                            runOnUiThread {
+                                content.addView(
+                                    generateButton(
+                                        optionRow,
+                                        numberFormat.format(
+                                            "${productCodeINDOSAT[i].replace(
+                                                "INDOSAT",
+                                                ""
+                                            )}000".toInt()
+                                        )
+                                    )
+                                )
+                            }
+                        }
                     }
                 }
             }
             hrlXL.any { target -> text.contains(target) } -> when (phoneType) {
-                "DATA" -> for (i in 0 until productCodeXLDATA.size) {
-                    runOnUiThread {
-                        content.addView(
-                            generateButton(
-                                optionRow,
-                                numberFormat.format(
-                                    "${productCodeXL[i].replace(
-                                        "XL",
-                                        ""
-                                    )}000".toInt()
+                "DATA" -> {
+                    loop = 2
+                    for (i in 0 until productNameXLDATA.size) {
+                        if (i == (loop - 1)) {
+                            runOnUiThread {
+                                content1.addView(
+                                    generateButton(
+                                        optionRow,
+                                        productNameXLDATA[i]
+                                    )
                                 )
-                            )
-                        )
+                                loop += 2
+                            }
+                        } else {
+                            runOnUiThread {
+                                content.addView(
+                                    generateButton(
+                                        optionRow,
+                                        productNameXLDATA[i]
+                                    )
+                                )
+                            }
+                        }
                     }
                 }
-                else -> for (i in 0 until productCodeXL.size) {
-                    runOnUiThread {
-                        content.addView(
-                            generateButton(
-                                optionRow,
-                                numberFormat.format(
-                                    "${productCodeXL[i].replace(
-                                        "XL",
-                                        ""
-                                    )}000".toInt()
+                else -> {
+                    loop = 2
+                    for (i in 0 until productCodeXL.size) {
+                        if (i == (loop - 1)) {
+                            runOnUiThread {
+                                content1.addView(
+                                    generateButton(
+                                        optionRow,
+                                        numberFormat.format(
+                                            "${productCodeXL[i].replace(
+                                                "XL",
+                                                ""
+                                            )}000".toInt()
+                                        )
+                                    )
                                 )
-                            )
-                        )
+                                loop += 2
+                            }
+                        } else {
+                            runOnUiThread {
+                                content.addView(
+                                    generateButton(
+                                        optionRow,
+                                        numberFormat.format(
+                                            "${productCodeXL[i].replace(
+                                                "XL",
+                                                ""
+                                            )}000".toInt()
+                                        )
+                                    )
+                                )
+                            }
+                        }
                     }
                 }
             }
             hrlSMART.any { target -> text.contains(target) } -> when (phoneType) {
-                "DATA" -> for (i in 0 until productCodeSMARTDATA.size) {
-                    runOnUiThread {
-                        content.addView(
-                            generateButton(
-                                optionRow,
-                                numberFormat.format(
-                                    "${productCodeSMARTDATA[i].replace(
-                                        "SMART",
-                                        ""
-                                    )}000".toInt()
+                "DATA" -> {
+                    loop = 2
+                    for (i in 0 until productNameSMARTDATA.size) {
+                        if (i == (loop - 1)) {
+                            runOnUiThread {
+                                content1.addView(
+                                    generateButton(
+                                        optionRow,
+                                        productNameSMARTDATA[i]
+                                    )
                                 )
-                            )
-                        )
+                                loop += 2
+                            }
+                        } else {
+                            runOnUiThread {
+                                content.addView(
+                                    generateButton(
+                                        optionRow,
+                                        productNameSMARTDATA[i]
+                                    )
+                                )
+                            }
+                        }
                     }
                 }
-                else -> for (i in 0 until productCodeSMART.size) {
-                    runOnUiThread {
-                        content.addView(
-                            generateButton(
-                                optionRow,
-                                numberFormat.format(
-                                    "${productCodeSMART[i].replace(
-                                        "SMART",
-                                        ""
-                                    )}000".toInt()
+                else -> {
+                    loop = 2
+                    for (i in 0 until productCodeSMART.size) {
+                        if (i == (loop - 1)) {
+                            runOnUiThread {
+                                content1.addView(
+                                    generateButton(
+                                        optionRow,
+                                        numberFormat.format(
+                                            "${productCodeSMART[i].replace(
+                                                "SMART",
+                                                ""
+                                            )}000".toInt()
+                                        )
+                                    )
                                 )
-                            )
-                        )
+                                loop += 2
+                            }
+                        } else {
+                            runOnUiThread {
+                                content.addView(
+                                    generateButton(
+                                        optionRow,
+                                        numberFormat.format(
+                                            "${productCodeSMART[i].replace(
+                                                "SMART",
+                                                ""
+                                            )}000".toInt()
+                                        )
+                                    )
+                                )
+                            }
+                        }
                     }
                 }
             }
             hrlTHREE.any { target -> text.contains(target) } -> when (phoneType) {
-                "DATA" -> for (i in 0 until productCodeTHREEDATA.size) {
-                    runOnUiThread {
-                        content.addView(
-                            generateButton(
-                                optionRow,
-                                numberFormat.format(
-                                    "${productCodeTHREEDATA[i].replace(
-                                        "THREE",
-                                        ""
-                                    )}000".toInt()
+                "DATA" -> {
+                    loop = 2
+                    for (i in 0 until productNameTHREEDATA.size) {
+                        if (i == (loop - 1)) {
+                            runOnUiThread {
+                                content1.addView(
+                                    generateButton(
+                                        optionRow,
+                                        productNameTHREEDATA[i]
+                                    )
                                 )
-                            )
-                        )
+                                loop += 2
+                            }
+                        } else {
+                            runOnUiThread {
+                                content.addView(
+                                    generateButton(
+                                        optionRow,
+                                        productNameTHREEDATA[i]
+                                    )
+                                )
+                            }
+                        }
                     }
                 }
-                else -> for (i in 0 until productCodeTHREE.size) {
-                    runOnUiThread {
-                        content.addView(
-                            generateButton(
-                                optionRow,
-                                numberFormat.format(
-                                    "${productCodeTHREE[i].replace(
-                                        "THREE",
-                                        ""
-                                    )}000".toInt()
+                else -> {
+                    loop = 2
+                    for (i in 0 until productCodeTHREE.size) {
+                        if (i == (loop - 1)) {
+                            runOnUiThread {
+                                content1.addView(
+                                    generateButton(
+                                        optionRow,
+                                        numberFormat.format(
+                                            "${productCodeTHREE[i].replace(
+                                                "THREE",
+                                                ""
+                                            )}000".toInt()
+                                        )
+                                    )
                                 )
-                            )
-                        )
+                                loop += 2
+                            }
+                        } else {
+                            runOnUiThread {
+                                content.addView(
+                                    generateButton(
+                                        optionRow,
+                                        numberFormat.format(
+                                            "${productCodeTHREE[i].replace(
+                                                "THREE",
+                                                ""
+                                            )}000".toInt()
+                                        )
+                                    )
+                                )
+                            }
+                        }
                     }
                 }
             }
             else -> {
                 runOnUiThread {
                     content.removeAllViews()
+                    content1.removeAllViews()
                 }
             }
         }
