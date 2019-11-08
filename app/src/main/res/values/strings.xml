@@ -13,12 +13,19 @@
     <string name="your_balance">Saldo Sanda</string>
     <string name="default_balance">Rp0</string>
     <string name="more">Lihat Semua</string>
-    <string name="phone_number">Nomor Telfon</string>
+    <string name="phone_number">Nomor Telpon</string>
     <string name="phone_number_example">EX(081000000000)</string>
     <string name="package_pulsa"> Paket Pulsa</string>
     <string name="package_data"> Paket Data</string>
     <string name="error_404">Koneksi Terputus atau tidak ada jarignan internet</string>
     <string name="error_Debug">Data tidak terload secara normal mohon ualngi lagi</string>
+    <string name="price">Harga</string>
+    <string name="first_balance">Saldo Awal</string>
+    <string name="remaining_balance">Sisa Awal</string>
+    <string name="fee">Fee</string>
+    <string name="pay">Bayar</string>
+
+    <string name="payment_title">Konfiramasi Pembayaran</string>
 
     <!-- ppob -->
     <string name="pln">pln</string>

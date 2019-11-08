@@ -1,16 +1,21 @@
 package id.co.agogo.ppob.pulsa
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
+import androidx.core.text.isDigitsOnly
 import androidx.core.widget.doOnTextChanged
 import id.co.agogo.R
 import id.co.agogo.api.HrlController
 import id.co.agogo.api.ProductController
+import id.co.agogo.api.ppob.DepositController
+import id.co.agogo.ppob.payment.DepositActivity
 import org.json.JSONArray
+import org.json.JSONObject
 import java.lang.Exception
 import java.text.NumberFormat
 import java.util.*
@@ -55,6 +60,12 @@ class PulsaActivity : AppCompatActivity() {
     private var phoneOperator = ""
     private var phoneType = "REGULER"
     private lateinit var progressBar: ProgressBar
+    private lateinit var phoneTarget: EditText
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finishAndRemoveTask()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +74,7 @@ class PulsaActivity : AppCompatActivity() {
         val idr = Locale("in", "ID")
         val numberFormat = NumberFormat.getCurrencyInstance(idr)
 
-        val phoneTarget: EditText = findViewById(R.id.phoneTargetEditText)
+        phoneTarget = findViewById(R.id.phoneTargetEditText)
         val switchPackage: Switch = findViewById(R.id.switchPackage)
         val content: LinearLayout = findViewById(R.id.content)
         val content1: LinearLayout = findViewById(R.id.content1)
@@ -329,8 +340,8 @@ class PulsaActivity : AppCompatActivity() {
             }
         }
 
-        switchPackage.setOnClickListener {
-            if (switchPackage.isChecked) {
+        switchPackage.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
                 switchPackage.setText(R.string.package_data)
                 phoneType = "DATA"
                 content.removeAllViews()
@@ -357,13 +368,89 @@ class PulsaActivity : AppCompatActivity() {
         }
     }
 
-    private fun generateButton(layoutParams: LinearLayout.LayoutParams, value: String): View {
+    private fun generateButton(
+        layoutParams: LinearLayout.LayoutParams,
+        value: String,
+        code: String
+    ): View {
         val button = Button(this)
         button.layoutParams = layoutParams
         button.text = value
         button.elevation = 20F
         button.setTextColor(Color.parseColor("#ff8492"))
         button.setBackgroundResource(R.drawable.button_default)
+        button.setOnClickListener {
+            progressBar.visibility = ProgressBar.VISIBLE
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+            )
+
+            if (!validateNumber(phoneTarget.text.toString())) {
+                window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                progressBar.visibility = ProgressBar.GONE
+                Toast.makeText(
+                    applicationContext,
+                    "${getString(R.string.phone_number)} tidak boleh kosong dan hanya boleh angka",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Timer().schedule(1000) {
+                    val response = getResponseDeposit(code)
+
+                    println("===========================================")
+                    println(response)
+                    println(value)
+                    println(code)
+                    println("===========================================")
+
+                    when {
+                        response["Status"].toString() == "0" -> {
+                            runOnUiThread {
+                                window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                                progressBar.visibility = ProgressBar.GONE
+                                val goTo = Intent(applicationContext, DepositActivity::class.java)
+                                startActivity(goTo)
+                                finishAndRemoveTask()
+                            }
+                        }
+                        response["Status"].toString() == "1" -> {
+                            runOnUiThread {
+                                window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                                progressBar.visibility = ProgressBar.GONE
+                                Toast.makeText(
+                                    applicationContext,
+                                    response["Pesan"].toString(),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                        response["Status"].toString() == "2" -> {
+                            runOnUiThread {
+                                window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                                progressBar.visibility = ProgressBar.GONE
+                                Toast.makeText(
+                                    applicationContext,
+                                    getString(response["message"].toString().toInt()),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                        else -> {
+                            runOnUiThread {
+                                window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                                progressBar.visibility = ProgressBar.GONE
+                                Toast.makeText(
+                                    applicationContext,
+                                    getString(response["message"].toString().toInt()),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
+                }
+            }
+        }
         return button
     }
 
@@ -387,7 +474,8 @@ class PulsaActivity : AppCompatActivity() {
                                 content1.addView(
                                     generateButton(
                                         optionRow,
-                                        productNameTELKOMSELDATA[i]
+                                        productNameTELKOMSELDATA[i],
+                                        productCodeTELKOMSELDATA[i]
                                     )
                                 )
                                 loop += 2
@@ -397,7 +485,8 @@ class PulsaActivity : AppCompatActivity() {
                                 content.addView(
                                     generateButton(
                                         optionRow,
-                                        productNameTELKOMSELDATA[i]
+                                        productNameTELKOMSELDATA[i],
+                                        productCodeTELKOMSELDATA[i]
                                     )
                                 )
                             }
@@ -417,7 +506,8 @@ class PulsaActivity : AppCompatActivity() {
                                                 "TELKOMSEL",
                                                 ""
                                             )}000".toInt()
-                                        )
+                                        ),
+                                        productCodeTELKOMSEL[i]
                                     )
                                 )
                                 loop += 2
@@ -432,7 +522,8 @@ class PulsaActivity : AppCompatActivity() {
                                                 "TELKOMSEL",
                                                 ""
                                             )}000".toInt()
-                                        )
+                                        ),
+                                        productCodeTELKOMSEL[i]
                                     )
                                 )
                             }
@@ -449,7 +540,8 @@ class PulsaActivity : AppCompatActivity() {
                                 content1.addView(
                                     generateButton(
                                         optionRow,
-                                        productNameINDOSATDATA[i]
+                                        productNameINDOSATDATA[i],
+                                        productCodeINDOSATDATA[i]
                                     )
                                 )
                                 loop += 2
@@ -459,7 +551,8 @@ class PulsaActivity : AppCompatActivity() {
                                 content.addView(
                                     generateButton(
                                         optionRow,
-                                        productNameINDOSATDATA[i]
+                                        productNameINDOSATDATA[i],
+                                        productCodeINDOSATDATA[i]
                                     )
                                 )
                             }
@@ -479,7 +572,8 @@ class PulsaActivity : AppCompatActivity() {
                                                 "INDOSAT",
                                                 ""
                                             )}000".toInt()
-                                        )
+                                        ),
+                                        productCodeINDOSAT[i]
                                     )
                                 )
                                 loop += 2
@@ -494,7 +588,8 @@ class PulsaActivity : AppCompatActivity() {
                                                 "INDOSAT",
                                                 ""
                                             )}000".toInt()
-                                        )
+                                        ),
+                                        productCodeINDOSAT[i]
                                     )
                                 )
                             }
@@ -511,7 +606,8 @@ class PulsaActivity : AppCompatActivity() {
                                 content1.addView(
                                     generateButton(
                                         optionRow,
-                                        productNameXLDATA[i]
+                                        productNameXLDATA[i],
+                                        productCodeXLDATA[i]
                                     )
                                 )
                                 loop += 2
@@ -521,7 +617,8 @@ class PulsaActivity : AppCompatActivity() {
                                 content.addView(
                                     generateButton(
                                         optionRow,
-                                        productNameXLDATA[i]
+                                        productNameXLDATA[i],
+                                        productCodeXLDATA[i]
                                     )
                                 )
                             }
@@ -541,7 +638,8 @@ class PulsaActivity : AppCompatActivity() {
                                                 "XL",
                                                 ""
                                             )}000".toInt()
-                                        )
+                                        ),
+                                        productCodeXL[i]
                                     )
                                 )
                                 loop += 2
@@ -556,7 +654,8 @@ class PulsaActivity : AppCompatActivity() {
                                                 "XL",
                                                 ""
                                             )}000".toInt()
-                                        )
+                                        ),
+                                        productCodeXL[i]
                                     )
                                 )
                             }
@@ -573,7 +672,8 @@ class PulsaActivity : AppCompatActivity() {
                                 content1.addView(
                                     generateButton(
                                         optionRow,
-                                        productNameSMARTDATA[i]
+                                        productNameSMARTDATA[i],
+                                        productCodeSMARTDATA[i]
                                     )
                                 )
                                 loop += 2
@@ -583,7 +683,8 @@ class PulsaActivity : AppCompatActivity() {
                                 content.addView(
                                     generateButton(
                                         optionRow,
-                                        productNameSMARTDATA[i]
+                                        productNameSMARTDATA[i],
+                                        productCodeSMARTDATA[i]
                                     )
                                 )
                             }
@@ -603,7 +704,8 @@ class PulsaActivity : AppCompatActivity() {
                                                 "SMART",
                                                 ""
                                             )}000".toInt()
-                                        )
+                                        ),
+                                        productCodeSMART[i]
                                     )
                                 )
                                 loop += 2
@@ -618,7 +720,8 @@ class PulsaActivity : AppCompatActivity() {
                                                 "SMART",
                                                 ""
                                             )}000".toInt()
-                                        )
+                                        ),
+                                        productCodeSMART[i]
                                     )
                                 )
                             }
@@ -635,7 +738,8 @@ class PulsaActivity : AppCompatActivity() {
                                 content1.addView(
                                     generateButton(
                                         optionRow,
-                                        productNameTHREEDATA[i]
+                                        productNameTHREEDATA[i],
+                                        productCodeTHREEDATA[i]
                                     )
                                 )
                                 loop += 2
@@ -645,7 +749,8 @@ class PulsaActivity : AppCompatActivity() {
                                 content.addView(
                                     generateButton(
                                         optionRow,
-                                        productNameTHREEDATA[i]
+                                        productNameTHREEDATA[i],
+                                        productCodeTHREEDATA[i]
                                     )
                                 )
                             }
@@ -665,7 +770,8 @@ class PulsaActivity : AppCompatActivity() {
                                                 "THREE",
                                                 ""
                                             )}000".toInt()
-                                        )
+                                        ),
+                                        productCodeTHREE[i]
                                     )
                                 )
                                 loop += 2
@@ -680,7 +786,8 @@ class PulsaActivity : AppCompatActivity() {
                                                 "THREE",
                                                 ""
                                             )}000".toInt()
-                                        )
+                                        ),
+                                        productCodeTHREE[i]
                                     )
                                 )
                             }
@@ -695,5 +802,28 @@ class PulsaActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun getResponseDeposit(code: String): JSONObject {
+        return when (phoneType) {
+            "DATA" -> DepositController.PostDeposit(
+                "",
+                phoneTarget.text.toString(),
+                code,
+                "DATA"
+            ).execute().get()
+            else -> DepositController.PostDeposit(
+                "",
+                phoneTarget.text.toString(),
+                code,
+                ""
+            ).execute().get()
+        }
+    }
+
+    private fun validateNumber(value: String): Boolean {
+        return if (value.isEmpty()) {
+            false
+        } else value.isDigitsOnly()
     }
 }

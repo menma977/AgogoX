@@ -24,6 +24,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="n">
+        <activity android:name=".ppob.payment.DepositActivity"></activity>
         <activity
             android:name=".ppob.pulsa.PulsaActivity"
             android:label="@string/pulsa">
