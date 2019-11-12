@@ -6,14 +6,12 @@ import android.view.WindowManager
 import android.widget.*
 import androidx.core.text.isDigitsOnly
 import id.co.agogo.R
-import id.co.agogo.api.ppob.DataController
-import id.co.agogo.api.ppob.DepositController
+import id.co.agogo.api.ppob.TokenController
 import org.json.JSONObject
-import java.lang.Exception
 import java.text.NumberFormat
 import java.util.*
 
-class DepositActivity : AppCompatActivity() {
+class TokenDepositActivity : AppCompatActivity() {
 
     private lateinit var progressBar: ProgressBar
 
@@ -37,7 +35,7 @@ class DepositActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_deposit)
+        setContentView(R.layout.activity_token_deposit)
 
         val feeEditText: EditText = findViewById(R.id.feeEditText)
         val finish: Button = findViewById(R.id.finishButton)
@@ -50,14 +48,14 @@ class DepositActivity : AppCompatActivity() {
         openPopUp()
 
         val responseIntent = JSONObject(intent.getSerializableExtra("response").toString())
-        println(intent.getSerializableExtra("mobile").toString())
+        println(responseIntent)
 
         val idr = Locale("in", "ID")
         val numberFormat = NumberFormat.getCurrencyInstance(idr)
 
         try {
             phoneNumber.text = responseIntent["NoHP"].toString()
-            code.text = responseIntent["Kode"].toString()
+            code.text = responseIntent["IdPel"].toString()
             priceTextView.text = numberFormat.format(responseIntent["Harga"].toString().toInt())
             firstBalanceTextView.text =
                 numberFormat.format(responseIntent["SaldoAwal"].toString().toInt())
@@ -85,32 +83,17 @@ class DepositActivity : AppCompatActivity() {
                 Toast.makeText(this, "Fee hanya boleh angka", Toast.LENGTH_SHORT).show()
                 closePupUp()
             } else {
-                val response: JSONObject
-                if (intent.getSerializableExtra("mobile").toString().toBoolean()) {
-                    response = DataController.PostFinal(
-                        responseIntent["Username"].toString(),
-                        responseIntent["IdLogin"].toString(),
-                        responseIntent["NoHP"].toString(),
-                        responseIntent["Kode"].toString(),
-                        responseIntent["Nominal"].toString(),
-                        responseIntent["SaldoAwal"].toString(),
-                        feeEditText.text.toString(),
-                        responseIntent["Harga"].toString(),
-                        responseIntent["SisaSaldo"].toString()
-                    ).execute().get()
-                } else {
-                    response = DepositController.PostFinal(
-                        responseIntent["Username"].toString(),
-                        responseIntent["IdLogin"].toString(),
-                        responseIntent["NoHP"].toString(),
-                        responseIntent["Kode"].toString(),
-                        responseIntent["Nominal"].toString(),
-                        responseIntent["SaldoAwal"].toString(),
-                        feeEditText.text.toString(),
-                        responseIntent["Harga"].toString(),
-                        responseIntent["SisaSaldo"].toString()
-                    ).execute().get()
-                }
+                val response: JSONObject = TokenController.PostFinal(
+                    responseIntent["Username"].toString(),
+                    responseIntent["IdLogin"].toString(),
+                    responseIntent["NoHP"].toString(),
+                    responseIntent["Kode"].toString(),
+                    responseIntent["IdPel"].toString(),
+                    responseIntent["SaldoAwal"].toString(),
+                    feeEditText.text.toString(),
+                    responseIntent["Harga"].toString(),
+                    responseIntent["SisaSaldo"].toString()
+                ).execute().get()
 
                 if (response["Status"].toString() == "0") {
                     closePupUp()

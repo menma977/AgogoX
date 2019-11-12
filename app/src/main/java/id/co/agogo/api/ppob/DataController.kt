@@ -11,9 +11,10 @@ import java.lang.Exception
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
-class DepositController {
+class DataController {
     class PostDeposit(
         private val username: String,
+        private val sessionCode: String,
         private val phone: String,
         private val nominal: String,
         private val type: String
@@ -21,7 +22,7 @@ class DepositController {
         override fun doInBackground(vararg params: Void?): JSONObject {
             try {
                 val userAgent = "Mozilla/5.0"
-                val url = URL("${ApiController.getUrl()}/isipulsa.php")
+                val url = URL("${ApiController.getUrl()}/isiovo.php")
                 val httpURLConnection = url.openConnection() as HttpsURLConnection
 
                 //add request header
@@ -32,9 +33,11 @@ class DepositController {
 
                 val urlParameters = "a=ReqPulsa" +
                         "&username=${username}" +
+                        "&idlogin=$sessionCode" +
                         "&nohp=$phone" +
                         "&nominal=$nominal" +
                         "&type=$type"
+
                 println(urlParameters)
 
                 // Send post request
@@ -47,6 +50,7 @@ class DepositController {
                 val responseCode = httpURLConnection.responseCode
                 return if (responseCode == 200) {
                     val input = BufferedReader(InputStreamReader(httpURLConnection.inputStream))
+                    println(input)
                     val inputData: String = input.readLine()
                     val response = JSONObject(inputData)
                     input.close()
@@ -75,7 +79,7 @@ class DepositController {
         override fun doInBackground(vararg params: Void?): JSONObject {
             try {
                 val userAgent = "Mozilla/5.0"
-                val url = URL("${ApiController.getUrl()}/isipulsa.php")
+                val url = URL("${ApiController.getUrl()}/isiovo.php")
                 val httpURLConnection = url.openConnection() as HttpsURLConnection
 
                 //add request header
@@ -84,15 +88,10 @@ class DepositController {
                 httpURLConnection.setRequestProperty("Accept-Language", "en-US,en;q=0.5")
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
-                val urlParameters = "a=PayPulsa&username=$username" +
-                        "&idlogin=$sessionCode" +
-                        "&nohp=$phone" +
-                        "&kode=$payCode" +
-                        "&nominal=$nominal" +
-                        "&saldoawal=$firstBalance" +
-                        "&markup=$markupAdmin" +
-                        "&harga=$price" +
-                        "&sisasaldo=$remainingBalance"
+                val urlParameters =
+                    "a=PayPulsa&username=$username&idlogin=$sessionCode&nohp=$phone" +
+                            "&kode=$payCode&nominal=$nominal&saldoawal=$firstBalance&markup=$markupAdmin" +
+                            "&harga=$price&sisasaldo=$remainingBalance"
 
                 // Send post request
                 httpURLConnection.doOutput = true

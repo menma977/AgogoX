@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         login.setOnClickListener {
             doRequestPermission()
             if (doRequestPermission()) {
+//                val goTo = Intent(this, LoginActivity::class.java)
                 val goTo = Intent(this, HomeActivity::class.java)
                 finishAndRemoveTask()
                 startActivity(goTo)

@@ -13,8 +13,9 @@ import androidx.core.os.postDelayed
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import id.co.agogo.R
 
+
 class BottomPopUpNavigationMenu : BottomSheetDialogFragment() {
-    private var editTextChangeListener: EditTextChangeListener? = null
+    private var buttonClickListener: ButtonClickListener? = null
     private lateinit var imm: InputMethodManager
 
     override fun onCreateView(
@@ -37,27 +38,26 @@ class BottomPopUpNavigationMenu : BottomSheetDialogFragment() {
                     passwordTRX.clearFocus()
                     imm.hideSoftInputFromWindow(passwordTRX.windowToken, 0)
                 }
-                editTextChangeListener?.onEditTextChange(passwordTRX.text.toString())
+                buttonClickListener?.onButtonClick(passwordTRX.text.toString())
                 dismiss()
             } catch (e: java.lang.ClassCastException) {
-                throw ClassCastException(context.toString() + "must implement EditTextChangeListener")
+                throw ClassCastException(context.toString() + "must implement buttonClickListener")
             }
         }
 
         return view
     }
 
-    interface EditTextChangeListener {
-        fun onEditTextChange(text: String)
+    interface ButtonClickListener {
+        fun onButtonClick(text: String)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
         try {
-            editTextChangeListener = context as EditTextChangeListener
+            buttonClickListener = context as ButtonClickListener
         } catch (e: ClassCastException) {
-            throw ClassCastException(context.toString() + "must implement EditTextChangeListener")
+            throw ClassCastException(context.toString() + "must implement buttonClickListener")
         }
 
     }

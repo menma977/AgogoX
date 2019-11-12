@@ -56,15 +56,29 @@ class PulsaActivity : AppCompatActivity() {
     private var hrlAXIS = ArrayList<String>()
     private var hrlSMART = ArrayList<String>()
     private var hrlTHREE = ArrayList<String>()
+    private var username = "081211610807"
     private var phoneNumber = "081211610807"
     private var phoneOperator = ""
-    private var phoneType = "REGULER"
+    private var phoneType = "PULSA"
     private lateinit var progressBar: ProgressBar
     private lateinit var phoneTarget: EditText
 
     override fun onBackPressed() {
         super.onBackPressed()
         finishAndRemoveTask()
+    }
+
+    private fun openPopUp() {
+        progressBar.visibility = ProgressBar.VISIBLE
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+    }
+
+    private fun closePupUp() {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        progressBar.visibility = ProgressBar.GONE
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,11 +103,7 @@ class PulsaActivity : AppCompatActivity() {
         optionRow.rightMargin = 5
         optionRow.leftMargin = 5
 
-        progressBar.visibility = ProgressBar.VISIBLE
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-        )
+        openPopUp()
 
         content.removeAllViews()
         content1.removeAllViews()
@@ -110,7 +120,7 @@ class PulsaActivity : AppCompatActivity() {
                         finishAndRemoveTask()
                     }
                 }
-                if (product.getJSONObject(0).length() <= 2) {
+                if (hlr.getJSONObject(0).length() <= 2) {
                     runOnUiThread {
                         Toast.makeText(applicationContext, R.string.error_404, Toast.LENGTH_LONG)
                             .show()
@@ -281,8 +291,7 @@ class PulsaActivity : AppCompatActivity() {
             }
 
             runOnUiThread {
-                window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-                progressBar.visibility = ProgressBar.GONE
+                closePupUp()
 
                 when (phoneOperator) {
                     "TELKOMSEL" -> for (i in 0 until productCodeTELKOMSEL.size) {
@@ -355,7 +364,7 @@ class PulsaActivity : AppCompatActivity() {
                 )
             } else {
                 switchPackage.setText(R.string.package_pulsa)
-                phoneType = "REGULER"
+                phoneType = "PULSA"
                 content.removeAllViews()
                 productSelection(
                     phoneTarget.text.toString(),
@@ -380,15 +389,11 @@ class PulsaActivity : AppCompatActivity() {
         button.setTextColor(Color.parseColor("#ff8492"))
         button.setBackgroundResource(R.drawable.button_default)
         button.setOnClickListener {
-            progressBar.visibility = ProgressBar.VISIBLE
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-            )
+            openPopUp()
 
             if (!validateNumber(phoneTarget.text.toString())) {
-                window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-                progressBar.visibility = ProgressBar.GONE
+                closePupUp()
+
                 Toast.makeText(
                     applicationContext,
                     "${getString(R.string.phone_number)} tidak boleh kosong dan hanya boleh angka",
@@ -407,17 +412,19 @@ class PulsaActivity : AppCompatActivity() {
                     when {
                         response["Status"].toString() == "0" -> {
                             runOnUiThread {
-                                window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-                                progressBar.visibility = ProgressBar.GONE
-                                val goTo = Intent(applicationContext, DepositActivity::class.java)
+                                closePupUp()
+                                val goTo = Intent(
+                                    applicationContext,
+                                    DepositActivity::class.java
+                                ).putExtra("response", response.toString()).putExtra("mobile", false)
                                 startActivity(goTo)
                                 finishAndRemoveTask()
                             }
                         }
                         response["Status"].toString() == "1" -> {
                             runOnUiThread {
-                                window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-                                progressBar.visibility = ProgressBar.GONE
+                                closePupUp()
+
                                 Toast.makeText(
                                     applicationContext,
                                     response["Pesan"].toString(),
@@ -427,8 +434,8 @@ class PulsaActivity : AppCompatActivity() {
                         }
                         response["Status"].toString() == "2" -> {
                             runOnUiThread {
-                                window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-                                progressBar.visibility = ProgressBar.GONE
+                                closePupUp()
+
                                 Toast.makeText(
                                     applicationContext,
                                     getString(response["message"].toString().toInt()),
@@ -438,8 +445,7 @@ class PulsaActivity : AppCompatActivity() {
                         }
                         else -> {
                             runOnUiThread {
-                                window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-                                progressBar.visibility = ProgressBar.GONE
+                                closePupUp()
                                 Toast.makeText(
                                     applicationContext,
                                     getString(response["message"].toString().toInt()),
@@ -807,16 +813,16 @@ class PulsaActivity : AppCompatActivity() {
     private fun getResponseDeposit(code: String): JSONObject {
         return when (phoneType) {
             "DATA" -> DepositController.PostDeposit(
-                "",
+                username,
                 phoneTarget.text.toString(),
                 code,
                 "DATA"
             ).execute().get()
             else -> DepositController.PostDeposit(
-                "",
+                username,
                 phoneTarget.text.toString(),
                 code,
-                ""
+                "PULSA"
             ).execute().get()
         }
     }

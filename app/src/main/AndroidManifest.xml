@@ -24,7 +24,70 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".ppob.payment.DepositActivity"></activity>
+        <activity android:name=".ppob.pulsaPascabayar.PulsaPascabayarActivity"></activity>
+        <activity
+            android:name=".ppob.eMoneyMandiri.EMoneyMandiriActivity"
+            android:label="@string/e_money_mandiri">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
+        <activity
+            android:name=".ppob.tabCashBNI.TabCashBNIActivity"
+            android:label="@string/tab_cash_bni">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
+        <activity
+            android:name=".ppob.payment.TokenDepositActivity"
+            android:label="@string/payment_title">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
+        <activity
+            android:name=".ppob.pln.PlnActivity"
+            android:label="@string/pln">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
+        <activity
+            android:name=".ppob.dana.DanaActivity"
+            android:label="@string/dana">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
+        <activity
+            android:name=".ppob.gopay.GoPayActivity"
+            android:label="@string/go_pay">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
+        <activity
+            android:name=".ppob.grab.GrabActivity"
+            android:label="@string/grab">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
+        <activity
+            android:name=".ppob.ovo.OvoActivity"
+            android:label="@string/ovo">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
+        <activity
+            android:name=".ppob.payment.DepositActivity"
+            android:label="@string/payment_title">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
         <activity
             android:name=".ppob.pulsa.PulsaActivity"
             android:label="@string/pulsa">

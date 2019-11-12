@@ -42,13 +42,13 @@
                 android:textStyle="bold" />
 
             <ImageButton
-                android:id="@+id/imageButton"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:id="@+id/logoutButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:background="@color/Link"
                 android:contentDescription="@string/icon"
                 android:scaleType="fitXY"
-                app:srcCompat="@drawable/ic_launcher_foreground" />
+                app:srcCompat="@drawable/logout" />
 
 
         </LinearLayout>
@@ -84,72 +84,34 @@
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="15dp">
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="20dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
+                android:gravity="start"
                 android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/refreshButton"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
                     android:background="@color/Link"
                     android:contentDescription="@string/icon"
                     android:scaleType="fitXY"
-                    app:srcCompat="@drawable/ic_launcher_foreground" />
+                    app:srcCompat="@drawable/refresh" />
 
                 <ImageButton
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
                     android:background="@color/Link"
                     android:contentDescription="@string/icon"
-                    app:srcCompat="@drawable/ic_launcher_background" />
-
-                <ImageButton
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@color/Link"
-                    android:contentDescription="@string/icon"
-                    app:srcCompat="@drawable/ic_launcher_background" />
-
-                <ImageButton
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@color/Link"
-                    android:contentDescription="@string/icon"
-                    app:srcCompat="@drawable/ic_launcher_background" />
-
-                <ImageButton
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@color/Link"
-                    android:contentDescription="@string/icon"
-                    app:srcCompat="@drawable/ic_launcher_background" />
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/refresh" />
 
             </LinearLayout>
 
@@ -183,16 +145,19 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/plnButton"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@color/Link"
-                    android:drawableTop="@drawable/pulsa"
+                    android:background="@drawable/button_default"
+                    android:drawableTop="@drawable/pln"
+                    android:minHeight="100dp"
+                    android:padding="5dp"
                     android:text="@string/pln"
                     android:textSize="12sp" />
 
@@ -200,42 +165,48 @@
                     android:id="@+id/pulsaButton"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@color/Link"
+                    android:background="@drawable/button_default"
                     android:drawableTop="@drawable/pulsa"
+                    android:minHeight="100dp"
+                    android:padding="5dp"
                     android:text="@string/pulsa"
                     android:textSize="12sp" />
 
                 <Button
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@color/Link"
-                    android:drawableTop="@drawable/pulsa"
+                    android:background="@drawable/button_default"
+                    android:drawableTop="@drawable/tvkable"
+                    android:minHeight="100dp"
+                    android:padding="5dp"
                     android:text="@string/tv_kabel"
                     android:textSize="12sp" />
 
                 <Button
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@color/Link"
-                    android:drawableTop="@drawable/pulsa"
+                    android:background="@drawable/button_default"
+                    android:drawableTop="@drawable/pulsapascabayar"
+                    android:minHeight="100dp"
+                    android:padding="5dp"
                     android:text="@string/pulsa_pascabayar"
                     android:textSize="12sp" />
 
@@ -248,58 +219,70 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/goPayButton"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@color/Link"
+                    android:background="@drawable/button_default"
                     android:drawableTop="@drawable/pulsa"
+                    android:minHeight="100dp"
+                    android:padding="5dp"
                     android:text="@string/go_pay"
                     android:textSize="12sp" />
 
                 <Button
+                    android:id="@+id/grabButton"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@color/Link"
+                    android:background="@drawable/button_default"
                     android:drawableTop="@drawable/pulsa"
+                    android:minHeight="100dp"
+                    android:padding="5dp"
                     android:text="@string/grab"
                     android:textSize="12sp" />
 
                 <Button
+                    android:id="@+id/ovoButton"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@color/Link"
+                    android:background="@drawable/button_default"
                     android:drawableTop="@drawable/pulsa"
+                    android:minHeight="100dp"
+                    android:padding="5dp"
                     android:text="@string/ovo"
                     android:textSize="12sp" />
 
                 <Button
+                    android:id="@+id/danaButton"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@color/Link"
+                    android:background="@drawable/button_default"
                     android:drawableTop="@drawable/pulsa"
+                    android:minHeight="100dp"
+                    android:padding="5dp"
                     android:text="@string/dana"
                     android:textSize="12sp" />
 
@@ -312,58 +295,68 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/eMoneyMandiriButton"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@color/Link"
+                    android:background="@drawable/button_default"
                     android:drawableTop="@drawable/pulsa"
-                    android:text="@string/go_pay"
+                    android:minHeight="100dp"
+                    android:padding="5dp"
+                    android:text="@string/e_money_mandiri"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/tabCashBNIButton"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_default"
+                    android:drawableTop="@drawable/pulsa"
+                    android:minHeight="100dp"
+                    android:padding="5dp"
+                    android:text="@string/tab_cash_bni"
                     android:textSize="12sp" />
 
                 <Button
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@color/Link"
+                    android:background="@drawable/button_default"
                     android:drawableTop="@drawable/pulsa"
-                    android:text="@string/grab"
-                    android:textSize="12sp" />
-
-                <Button
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="1"
-                    android:background="@color/Link"
-                    android:drawableTop="@drawable/pulsa"
-                    android:text="@string/ovo" />
+                    android:minHeight="100dp"
+                    android:padding="5dp"
+                    android:text="@string/finance" />
 
                 <Button
                     android:id="@+id/moreButton"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@color/Link"
+                    android:background="@drawable/button_default"
                     android:drawableTop="@drawable/pulsa"
+                    android:minHeight="100dp"
+                    android:padding="5dp"
                     android:text="@string/more"
                     android:textSize="12sp" />
 

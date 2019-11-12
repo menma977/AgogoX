@@ -17,6 +17,13 @@ import androidx.core.content.ContextCompat.getSystemService
 import android.net.ConnectivityManager
 import androidx.core.app.ComponentActivity.ExtraData
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import id.co.agogo.ppob.dana.DanaActivity
+import id.co.agogo.ppob.eMoneyMandiri.EMoneyMandiriActivity
+import id.co.agogo.ppob.gopay.GoPayActivity
+import id.co.agogo.ppob.grab.GrabActivity
+import id.co.agogo.ppob.ovo.OvoActivity
+import id.co.agogo.ppob.pln.PlnActivity
+import id.co.agogo.ppob.tabCashBNI.TabCashBNIActivity
 
 
 class HomeActivity : AppCompatActivity() {
@@ -31,7 +38,14 @@ class HomeActivity : AppCompatActivity() {
         progressbarHome = findViewById(R.id.progressBarHome)
         val refresh: ImageButton = findViewById(R.id.refreshButton)
         val more: Button = findViewById(R.id.moreButton)
+        val pln: Button = findViewById(R.id.plnButton)
         val pulsa: Button = findViewById(R.id.pulsaButton)
+        val dana: Button = findViewById(R.id.danaButton)
+        val goPay: Button = findViewById(R.id.goPayButton)
+        val grab: Button = findViewById(R.id.grabButton)
+        val ovo: Button = findViewById(R.id.ovoButton)
+        val e_MoneyMandiri: Button = findViewById(R.id.eMoneyMandiriButton)
+        val tabCashBNI: Button = findViewById(R.id.tabCashBNIButton)
 
         progressbarHome.visibility = ProgressBar.VISIBLE
 
@@ -51,9 +65,100 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
+        pln.setOnClickListener {
+            if (isNetworkConnected()) {
+                goTo = Intent(this, PlnActivity::class.java)
+                startActivity(goTo)
+            } else {
+                Toast.makeText(
+                    this,
+                    "anda berada di koenksi yang tidak setabil",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
         pulsa.setOnClickListener {
             if (isNetworkConnected()) {
                 goTo = Intent(this, PulsaActivity::class.java)
+                startActivity(goTo)
+            } else {
+                Toast.makeText(
+                    this,
+                    "anda berada di koenksi yang tidak setabil",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        dana.setOnClickListener {
+            if (isNetworkConnected()) {
+                goTo = Intent(this, DanaActivity::class.java)
+                startActivity(goTo)
+            } else {
+                Toast.makeText(
+                    this,
+                    "anda berada di koenksi yang tidak setabil",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        grab.setOnClickListener {
+            if (isNetworkConnected()) {
+                goTo = Intent(this, GrabActivity::class.java)
+                startActivity(goTo)
+            } else {
+                Toast.makeText(
+                    this,
+                    "anda berada di koenksi yang tidak setabil",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        goPay.setOnClickListener {
+            if (isNetworkConnected()) {
+                goTo = Intent(this, GoPayActivity::class.java)
+                startActivity(goTo)
+            } else {
+                Toast.makeText(
+                    this,
+                    "anda berada di koenksi yang tidak setabil",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        ovo.setOnClickListener {
+            if (isNetworkConnected()) {
+                goTo = Intent(this, OvoActivity::class.java)
+                startActivity(goTo)
+            } else {
+                Toast.makeText(
+                    this,
+                    "anda berada di koenksi yang tidak setabil",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        e_MoneyMandiri.setOnClickListener {
+            if (isNetworkConnected()) {
+                goTo = Intent(this, EMoneyMandiriActivity::class.java)
+                startActivity(goTo)
+            } else {
+                Toast.makeText(
+                    this,
+                    "anda berada di koenksi yang tidak setabil",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        tabCashBNI.setOnClickListener {
+            if (isNetworkConnected()) {
+                goTo = Intent(this, TabCashBNIActivity::class.java)
                 startActivity(goTo)
             } else {
                 Toast.makeText(

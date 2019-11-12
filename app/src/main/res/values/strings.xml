@@ -1,43 +1,51 @@
 <resources>
     <string name="app_name">AGOGO</string>
-    <string name="version">version</string>
-    <string name="loading">Loading</string>
-    <string name="loading_massage">Loading…</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
-    <string name="login">Login</string>
+    <string name="version">versi</string>
+    <string name="loading">Memuat</string>
+    <string name="loading_massage">Memuat…</string>
+    <string name="username" translatable="false">Username</string>
+    <string name="password">Kata sandi</string>
+    <string name="login">Masuk</string>
     <string name="register">Pendaftaran</string>
     <string name="password_trx">Password TRX</string>
-    <string name="logo">Logo</string>
-    <string name="icon">Icon</string>
-    <string name="your_balance">Saldo Sanda</string>
-    <string name="default_balance">Rp0</string>
+    <string name="logo" translatable="false">Logo</string>
+    <string name="icon" translatable="false">Icon</string>
+    <string name="your_balance">Saldo Anda</string>
+    <string name="default_balance" translatable="false">Rp0</string>
     <string name="more">Lihat Semua</string>
-    <string name="phone_number">Nomor Telpon</string>
-    <string name="phone_number_example">EX(081000000000)</string>
+    <string name="phone_number">Nomor Telepon</string>
+    <string name="phone_number_example" translatable="false">EX(081000000000)</string>
     <string name="package_pulsa"> Paket Pulsa</string>
     <string name="package_data"> Paket Data</string>
-    <string name="error_404">Koneksi Terputus atau tidak ada jarignan internet</string>
-    <string name="error_Debug">Data tidak terload secara normal mohon ualngi lagi</string>
+    <string name="error_404">Koneksi Terputus atau tidak ada jaringan internet</string>
+    <string name="error_Debug">Data tidak terload secara normal mohon ulangi lagi</string>
+    <string name="id_user">ID Pelanggan</string>
     <string name="price">Harga</string>
+    <string name="code">Kode Transaksi</string>
     <string name="first_balance">Saldo Awal</string>
-    <string name="remaining_balance">Sisa Awal</string>
-    <string name="fee">Fee</string>
+    <string name="remaining_balance">Sisa Saldo</string>
+    <string name="fee" translatable="false">Fee</string>
+    <string name="fee_100" translatable="false">100</string>
+    <string name="fee_2500" translatable="false">2500</string>
     <string name="pay">Bayar</string>
+    <string name="fillter_id_user">ID Pelanggan tidak boleh kosong dan hanya boleh angka</string>
+    <string name="fillter_phone_number">Nomor Telepon tidak boleh kosong dan hanya boleh angka</string>
 
-    <string name="payment_title">Konfiramasi Pembayaran</string>
+    <string name="payment_title">Konfirmasi Pembayaran</string>
 
     <!-- ppob -->
-    <string name="pln">pln</string>
+    <string name="pln" translatable="false">PLN</string>
     <string name="pulsa">pulsa</string>
     <string name="pulsa_pascabayar">Pulsa Pascabayar</string>
-    <string name="tv_kabel">TV Kabel</string>
-    <string name="go_pay">GoPay</string>
-    <string name="grab">Grab</string>
-    <string name="ovo">OVO</string>
-    <string name="dana">DANA</string>
-    <string name="asuransi">Asuransi</string>
-    <string name="bpjs">BPJS</string>
-    <string name="finance">Finance</string>
+    <string name="tv_kabel" translatable="false">TV Kabel</string>
+    <string name="go_pay" translatable="false">GoPay</string>
+    <string name="grab" translatable="false">Grab</string>
+    <string name="ovo" translatable="false">OVO</string>
+    <string name="dana" translatable="false">DANA</string>
+    <string name="tab_cash_bni" translatable="false">Tab Cash BNI</string>
+    <string name="e_money_mandiri" translatable="false">E-Money Mandiri</string>
+    <string name="insurance" translatable="false">Insurance</string>
+    <string name="bpjs" translatable="false">BPJS</string>
+    <string name="finance" translatable="false">Finance</string>
     <!-- /ppob -->
 </resources>
