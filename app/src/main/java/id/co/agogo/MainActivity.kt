@@ -11,11 +11,19 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import id.co.agogo.model.Session
 
+/**
+ * @property login Button
+ * @property version TextView
+ * @property versionName String
+ */
 class MainActivity : AppCompatActivity() {
     private lateinit var login: Button
     private lateinit var version: TextView
     private var versionName: String = "0"
 
+    /**
+     * @param savedInstanceState Bundle?
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -56,6 +64,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * @return Boolean
+     */
     private fun doRequestPermission(): Boolean {
         return if (
             ContextCompat.checkSelfPermission(

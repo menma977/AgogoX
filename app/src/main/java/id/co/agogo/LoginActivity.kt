@@ -12,6 +12,15 @@ import java.lang.Exception
 import java.util.*
 import kotlin.concurrent.schedule
 
+/**
+ * @property version TextView
+ * @property username EditText
+ * @property password EditText
+ * @property login Button
+ * @property progressBar ProgressBar
+ * @property session Session
+ * @property versionName String
+ */
 class LoginActivity : AppCompatActivity(), BottomPopUpNavigationMenu.ButtonClickListener {
 
     private lateinit var version: TextView
@@ -35,6 +44,9 @@ class LoginActivity : AppCompatActivity(), BottomPopUpNavigationMenu.ButtonClick
         progressBar.visibility = ProgressBar.GONE
     }
 
+    /**
+     * @param text String
+     */
     override fun onButtonClick(text: String) {
         if (text.isNotEmpty()) {
             Timer().schedule(500) {
@@ -83,6 +95,9 @@ class LoginActivity : AppCompatActivity(), BottomPopUpNavigationMenu.ButtonClick
         startActivity(goTo)
     }
 
+    /**
+     * @param savedInstanceState Bundle?
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)

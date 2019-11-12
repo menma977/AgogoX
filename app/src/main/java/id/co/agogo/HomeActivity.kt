@@ -22,12 +22,19 @@ import id.co.agogo.ppob.pln.PlnActivity
 import id.co.agogo.ppob.pulsaPascabayar.PulsaPascabayarActivity
 import id.co.agogo.ppob.tabCashBNI.TabCashBNIActivity
 
-
+/**
+ *
+ * @property goTo Intent?
+ * @property progressbarHome ProgressBar
+ */
 class HomeActivity : AppCompatActivity() {
 
     private var goTo: Intent? = null
     private lateinit var progressbarHome: ProgressBar
 
+    /**
+     * @param savedInstanceState Bundle?
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -193,6 +200,10 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     *
+     * @return Boolean
+     */
     private fun isNetworkConnected(): Boolean {
         val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 

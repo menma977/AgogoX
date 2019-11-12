@@ -19,6 +19,18 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.concurrent.schedule
 
+/**
+ * @property product JSONArray
+ * @property productNameDANA ArrayList<String>
+ * @property productCodeDANA ArrayList<String>
+ * @property sessionUser String
+ * @property username String
+ * @property phoneNumber String
+ * @property phoneOperator String
+ * @property phoneType String
+ * @property progressBar ProgressBar
+ * @property phoneTarget EditText
+ */
 class DanaActivity : AppCompatActivity() {
 
     private lateinit var product: JSONArray
@@ -50,6 +62,9 @@ class DanaActivity : AppCompatActivity() {
         progressBar.visibility = ProgressBar.GONE
     }
 
+    /**
+     * @param savedInstanceState Bundle?
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_data)
@@ -129,6 +144,12 @@ class DanaActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * @param layoutParams LayoutParams
+     * @param value String
+     * @param code String
+     * @return View
+     */
     private fun generateButton(
         layoutParams: LinearLayout.LayoutParams,
         value: String,
@@ -210,6 +231,11 @@ class DanaActivity : AppCompatActivity() {
         return button
     }
 
+    /**
+     * @param content LinearLayout
+     * @param content1 LinearLayout
+     * @param optionRow LayoutParams
+     */
     private fun productSelection(
         content: LinearLayout,
         content1: LinearLayout,
@@ -244,6 +270,10 @@ class DanaActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * @param code String
+     * @return JSONObject
+     */
     private fun getResponseDeposit(code: String): JSONObject {
         return DataController.PostDeposit(
             username,
@@ -254,6 +284,10 @@ class DanaActivity : AppCompatActivity() {
         ).execute().get()
     }
 
+    /**
+     * @param value String
+     * @return Boolean
+     */
     private fun validateNumber(value: String): Boolean {
         return if (value.isEmpty()) {
             false
