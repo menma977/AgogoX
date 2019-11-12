@@ -28,7 +28,7 @@ class TokenDepositActivity : AppCompatActivity() {
         )
     }
 
-    private fun closePupUp() {
+    private fun closePopUp() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         progressBar.visibility = ProgressBar.GONE
     }
@@ -70,7 +70,7 @@ class TokenDepositActivity : AppCompatActivity() {
             ).show()
         }
 
-        closePupUp()
+        closePopUp()
 
         feeEditText.requestFocus()
 
@@ -78,10 +78,10 @@ class TokenDepositActivity : AppCompatActivity() {
             openPopUp()
             if (feeEditText.text.isEmpty()) {
                 Toast.makeText(this, "Fee tidak boleh kosong", Toast.LENGTH_SHORT).show()
-                closePupUp()
+                closePopUp()
             } else if (!feeEditText.text.isDigitsOnly()) {
                 Toast.makeText(this, "Fee hanya boleh angka", Toast.LENGTH_SHORT).show()
-                closePupUp()
+                closePopUp()
             } else {
                 val response: JSONObject = TokenController.PostFinal(
                     responseIntent["Username"].toString(),
@@ -96,12 +96,12 @@ class TokenDepositActivity : AppCompatActivity() {
                 ).execute().get()
 
                 if (response["Status"].toString() == "0") {
-                    closePupUp()
+                    closePopUp()
                     Toast.makeText(this, response["Pesan"].toString(), Toast.LENGTH_LONG).show()
                     finishAndRemoveTask()
                 } else {
                     Toast.makeText(this, response["Pesan"].toString(), Toast.LENGTH_LONG).show()
-                    closePupUp()
+                    closePopUp()
                 }
             }
         }

@@ -7,6 +7,7 @@ import android.view.WindowManager
 import android.widget.*
 import id.co.agogo.api.SessionTokenController
 import id.co.agogo.dialog.BottomPopUpNavigationMenu
+import id.co.agogo.model.Session
 import java.lang.Exception
 import java.util.*
 import kotlin.concurrent.schedule
@@ -18,31 +19,43 @@ class LoginActivity : AppCompatActivity(), BottomPopUpNavigationMenu.ButtonClick
     private lateinit var password: EditText
     private lateinit var login: Button
     private lateinit var progressBar: ProgressBar
+    private lateinit var session: Session
     private var versionName: String = "0"
+
+    private fun openPopUp() {
+        progressBar.visibility = ProgressBar.VISIBLE
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+    }
+
+    private fun closePopUp() {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        progressBar.visibility = ProgressBar.GONE
+    }
 
     override fun onButtonClick(text: String) {
         if (text.isNotEmpty()) {
             Timer().schedule(500) {
                 runOnUiThread {
-                    progressBar.visibility = ProgressBar.VISIBLE
-                    window.setFlags(
-                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-                    )
+                    openPopUp()
                 }
             }
             Timer().schedule(1000) {
                 val response =
-                    SessionTokenController.Login(username.text.toString(), password.text.toString())
-                        .execute().get()
+                    SessionTokenController.Verification(
+                        username.text.toString(),
+                        session.getString("key").toString()
+                    ).execute().get()
                 println(response)
-                if (response["code"] == 200) {
+                if (response["Status"].toString() == "0") {
                     runOnUiThread {
-                        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-                        progressBar.visibility = ProgressBar.GONE
+                        session.saveString("token", response["IdLogin"].toString())
+                        closePopUp()
                         Toast.makeText(
                             applicationContext,
-                            response.getString("message"),
+                            response.getString("Pesan"),
                             Toast.LENGTH_LONG
                         ).show()
                         val goTo = Intent(applicationContext, HomeActivity::class.java)
@@ -51,16 +64,10 @@ class LoginActivity : AppCompatActivity(), BottomPopUpNavigationMenu.ButtonClick
                     }
                 } else {
                     runOnUiThread {
-                        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-                        progressBar.visibility = ProgressBar.GONE
-                        if (response["type"].toString() == "username") {
-                            username.requestFocus()
-                        } else if (response["type"].toString() == "password") {
-                            password.requestFocus()
-                        }
+                        closePopUp()
                         Toast.makeText(
                             applicationContext,
-                            response.getString("message"),
+                            response.getString("Pesan"),
                             Toast.LENGTH_LONG
                         ).show()
                     }
@@ -85,6 +92,7 @@ class LoginActivity : AppCompatActivity(), BottomPopUpNavigationMenu.ButtonClick
         password = findViewById(R.id.password)
         login = findViewById(R.id.loginButton)
         progressBar = findViewById(R.id.progressBar)
+        session = Session(this)
 
         progressBar.visibility = ProgressBar.GONE
 
@@ -101,8 +109,29 @@ class LoginActivity : AppCompatActivity(), BottomPopUpNavigationMenu.ButtonClick
         username.requestFocus()
 
         login.setOnClickListener {
-            val popUpDialog = BottomPopUpNavigationMenu()
-            popUpDialog.show(supportFragmentManager, "Password TRX")
+            openPopUp()
+            Timer().schedule(1000) {
+                val response =
+                    SessionTokenController.Login(username.text.toString(), password.text.toString())
+                        .execute().get()
+                println(response)
+                runOnUiThread {
+                    if (response["Status"].toString() == "0") {
+                        val popUpDialog = BottomPopUpNavigationMenu()
+                        popUpDialog.show(supportFragmentManager, "Password TRX")
+                        session.saveString("username", username.text.toString())
+                        session.saveString("password", password.text.toString())
+                        session.saveString("key", response["code_key"].toString())
+                    } else {
+                        Toast.makeText(
+                            applicationContext,
+                            response["Pesan"].toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    closePopUp()
+                }
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ package id.co.agogo.api.ppob
 import android.os.AsyncTask
 import id.co.agogo.R
 import id.co.agogo.api.ApiController
+import id.co.agogo.api.DataIInjectorController
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.DataOutputStream
@@ -16,7 +17,7 @@ class TokenController {
         private val username: String,
         private val sessionCode: String,
         private val phone: String,
-        private val nominal: String,
+        private val idUser: String,
         private val type: String
     ) : AsyncTask<Void, Void, JSONObject>() {
         override fun doInBackground(vararg params: Void?): JSONObject {
@@ -31,17 +32,21 @@ class TokenController {
                 httpURLConnection.setRequestProperty("Accept-Language", "en-US,en;q=0.5")
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
-                val urlParameters = "a=ReqToken" +
-                        "&username=${username}" +
-                        "&idlogin=$sessionCode" +
-                        "&nohp=$phone" +
-                        "&idpel=$nominal" +
-                        "&type=$type"
+                //set body
+                val body = JSONObject()
+                body.put("a", "ReqToken")
+                body.put("username", username)
+                body.put("idlogin", sessionCode)
+                body.put("nohp", phone)
+                body.put("idpel", idUser)
+                body.put("type", type)
+
+                println(DataIInjectorController().jsonObjectToUrlEndCode(body))
 
                 // Send post request
                 httpURLConnection.doOutput = true
                 val write = DataOutputStream(httpURLConnection.outputStream)
-                write.writeBytes(urlParameters)
+                write.writeBytes(DataIInjectorController().jsonObjectToUrlEndCode(body))
                 write.flush()
                 write.close()
 
@@ -85,21 +90,25 @@ class TokenController {
                 httpURLConnection.setRequestProperty("Accept-Language", "en-US,en;q=0.5")
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
-                val urlParameters = "a=PayToken" +
-                        "&username=$username" +
-                        "&idlogin=$sessionCode" +
-                        "&nohp=$phone" +
-                        "&kode=$payCode" +
-                        "&idpel=$idUser" +
-                        "&saldoawal=$firstBalance" +
-                        "&markup=$markupAdmin" +
-                        "&harga=$price" +
-                        "&sisasaldo=$remainingBalance"
+                //set body
+                val body = JSONObject()
+                body.put("a", "PayToken")
+                body.put("username", username)
+                body.put("idlogin", sessionCode)
+                body.put("nohp", phone)
+                body.put("kode", payCode)
+                body.put("idpel", idUser)
+                body.put("saldoawal", firstBalance)
+                body.put("markup", markupAdmin)
+                body.put("harga", price)
+                body.put("sisasaldo", remainingBalance)
+
+                println(DataIInjectorController().jsonObjectToUrlEndCode(body))
 
                 // Send post request
                 httpURLConnection.doOutput = true
                 val write = DataOutputStream(httpURLConnection.outputStream)
-                write.writeBytes(urlParameters)
+                write.writeBytes(DataIInjectorController().jsonObjectToUrlEndCode(body))
                 write.flush()
                 write.close()
 

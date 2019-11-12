@@ -13,6 +13,7 @@ import id.co.agogo.R
 import id.co.agogo.api.HrlController
 import id.co.agogo.api.ProductController
 import id.co.agogo.api.ppob.DepositController
+import id.co.agogo.model.Session
 import id.co.agogo.ppob.payment.DepositActivity
 import org.json.JSONArray
 import org.json.JSONObject
@@ -56,6 +57,7 @@ class PulsaActivity : AppCompatActivity() {
     private var hrlAXIS = ArrayList<String>()
     private var hrlSMART = ArrayList<String>()
     private var hrlTHREE = ArrayList<String>()
+    private var sessionUser = ""
     private var username = "081211610807"
     private var phoneNumber = "081211610807"
     private var phoneOperator = ""
@@ -76,7 +78,7 @@ class PulsaActivity : AppCompatActivity() {
         )
     }
 
-    private fun closePupUp() {
+    private fun closePopUp() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         progressBar.visibility = ProgressBar.GONE
     }
@@ -84,6 +86,10 @@ class PulsaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pulsa)
+
+        sessionUser = Session(this).getString("token").toString()
+        username = Session(this).getString("username").toString()
+        phoneNumber = Session(this).getString("phone").toString()
 
         val idr = Locale("in", "ID")
         val numberFormat = NumberFormat.getCurrencyInstance(idr)
@@ -111,18 +117,26 @@ class PulsaActivity : AppCompatActivity() {
 
         Timer().schedule(2000) {
             try {
-                product = ProductController.GET(phoneNumber, "0").execute().get()
-                hlr = HrlController.GET(phoneNumber).execute().get()
+                product = ProductController.GET(username, sessionUser).execute().get()
+                hlr = HrlController.GET(username, sessionUser).execute().get()
                 if (product.getJSONObject(0).length() <= 2) {
                     runOnUiThread {
-                        Toast.makeText(applicationContext, R.string.error_404, Toast.LENGTH_LONG)
+                        Toast.makeText(
+                            applicationContext,
+                            getString(R.string.error_404),
+                            Toast.LENGTH_LONG
+                        )
                             .show()
                         finishAndRemoveTask()
                     }
                 }
                 if (hlr.getJSONObject(0).length() <= 2) {
                     runOnUiThread {
-                        Toast.makeText(applicationContext, R.string.error_404, Toast.LENGTH_LONG)
+                        Toast.makeText(
+                            applicationContext,
+                            getString(R.string.error_404),
+                            Toast.LENGTH_LONG
+                        )
                             .show()
                         finishAndRemoveTask()
                     }
@@ -130,7 +144,11 @@ class PulsaActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 e.printStackTrace()
                 runOnUiThread {
-                    Toast.makeText(applicationContext, R.string.error_404, Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        applicationContext,
+                        getString(R.string.error_404),
+                        Toast.LENGTH_LONG
+                    ).show()
                     finishAndRemoveTask()
                 }
             }
@@ -291,7 +309,7 @@ class PulsaActivity : AppCompatActivity() {
             }
 
             runOnUiThread {
-                closePupUp()
+                closePopUp()
 
                 when (phoneOperator) {
                     "TELKOMSEL" -> for (i in 0 until productCodeTELKOMSEL.size) {
@@ -392,7 +410,7 @@ class PulsaActivity : AppCompatActivity() {
             openPopUp()
 
             if (!validateNumber(phoneTarget.text.toString())) {
-                closePupUp()
+                closePopUp()
 
                 Toast.makeText(
                     applicationContext,
@@ -412,18 +430,19 @@ class PulsaActivity : AppCompatActivity() {
                     when {
                         response["Status"].toString() == "0" -> {
                             runOnUiThread {
-                                closePupUp()
+                                closePopUp()
                                 val goTo = Intent(
                                     applicationContext,
                                     DepositActivity::class.java
-                                ).putExtra("response", response.toString()).putExtra("mobile", false)
+                                ).putExtra("response", response.toString())
+                                    .putExtra("mobile", false)
                                 startActivity(goTo)
                                 finishAndRemoveTask()
                             }
                         }
                         response["Status"].toString() == "1" -> {
                             runOnUiThread {
-                                closePupUp()
+                                closePopUp()
 
                                 Toast.makeText(
                                     applicationContext,
@@ -434,7 +453,7 @@ class PulsaActivity : AppCompatActivity() {
                         }
                         response["Status"].toString() == "2" -> {
                             runOnUiThread {
-                                closePupUp()
+                                closePopUp()
 
                                 Toast.makeText(
                                     applicationContext,
@@ -445,7 +464,7 @@ class PulsaActivity : AppCompatActivity() {
                         }
                         else -> {
                             runOnUiThread {
-                                closePupUp()
+                                closePopUp()
                                 Toast.makeText(
                                     applicationContext,
                                     getString(response["message"].toString().toInt()),
@@ -814,12 +833,14 @@ class PulsaActivity : AppCompatActivity() {
         return when (phoneType) {
             "DATA" -> DepositController.PostDeposit(
                 username,
+                sessionUser,
                 phoneTarget.text.toString(),
                 code,
                 "DATA"
             ).execute().get()
             else -> DepositController.PostDeposit(
                 username,
+                sessionUser,
                 phoneTarget.text.toString(),
                 code,
                 "PULSA"

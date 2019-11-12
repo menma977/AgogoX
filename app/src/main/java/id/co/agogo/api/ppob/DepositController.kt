@@ -3,6 +3,7 @@ package id.co.agogo.api.ppob
 import android.os.AsyncTask
 import id.co.agogo.R
 import id.co.agogo.api.ApiController
+import id.co.agogo.api.DataIInjectorController
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.DataOutputStream
@@ -14,6 +15,7 @@ import javax.net.ssl.HttpsURLConnection
 class DepositController {
     class PostDeposit(
         private val username: String,
+        private val sessionCode: String,
         private val phone: String,
         private val nominal: String,
         private val type: String
@@ -30,17 +32,21 @@ class DepositController {
                 httpURLConnection.setRequestProperty("Accept-Language", "en-US,en;q=0.5")
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
-                val urlParameters = "a=ReqPulsa" +
-                        "&username=${username}" +
-                        "&nohp=$phone" +
-                        "&nominal=$nominal" +
-                        "&type=$type"
-                println(urlParameters)
+                //set body
+                val body = JSONObject()
+                body.put("a", "ReqPulsa")
+                body.put("username", username)
+                body.put("idlogin", sessionCode)
+                body.put("nohp", phone)
+                body.put("nominal", nominal)
+                body.put("type", type)
+
+                println(DataIInjectorController().jsonObjectToUrlEndCode(body))
 
                 // Send post request
                 httpURLConnection.doOutput = true
                 val write = DataOutputStream(httpURLConnection.outputStream)
-                write.writeBytes(urlParameters)
+                write.writeBytes(DataIInjectorController().jsonObjectToUrlEndCode(body))
                 write.flush()
                 write.close()
 
@@ -84,20 +90,25 @@ class DepositController {
                 httpURLConnection.setRequestProperty("Accept-Language", "en-US,en;q=0.5")
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
-                val urlParameters = "a=PayPulsa&username=$username" +
-                        "&idlogin=$sessionCode" +
-                        "&nohp=$phone" +
-                        "&kode=$payCode" +
-                        "&nominal=$nominal" +
-                        "&saldoawal=$firstBalance" +
-                        "&markup=$markupAdmin" +
-                        "&harga=$price" +
-                        "&sisasaldo=$remainingBalance"
+                //set body
+                val body = JSONObject()
+                body.put("a", "PayPulsa")
+                body.put("username", username)
+                body.put("idlogin", sessionCode)
+                body.put("nohp", phone)
+                body.put("kode", payCode)
+                body.put("nominal", nominal)
+                body.put("saldoawal", firstBalance)
+                body.put("markup", markupAdmin)
+                body.put("harga", price)
+                body.put("sisasaldo", remainingBalance)
+
+                println(DataIInjectorController().jsonObjectToUrlEndCode(body))
 
                 // Send post request
                 httpURLConnection.doOutput = true
                 val write = DataOutputStream(httpURLConnection.outputStream)
-                write.writeBytes(urlParameters)
+                write.writeBytes(DataIInjectorController().jsonObjectToUrlEndCode(body))
                 write.flush()
                 write.close()
 
@@ -112,11 +123,11 @@ class DepositController {
                     input.close()
                     response
                 } else {
-                    JSONObject("{Status: 1, Pesan: 'internet tidak setabil'}")
+                    JSONObject("{Status: 3, message: ${R.string.error_404}}")
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                return JSONObject("{Status: 1, Pesan: 'internet tidak setabil'}")
+                return JSONObject("{Status: 2, message: ${R.string.error_Debug}}")
             }
         }
     }

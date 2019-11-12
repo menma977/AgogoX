@@ -11,6 +11,7 @@ import androidx.core.text.isDigitsOnly
 import id.co.agogo.R
 import id.co.agogo.api.ProductController
 import id.co.agogo.api.ppob.DataController
+import id.co.agogo.model.Session
 import id.co.agogo.ppob.payment.DepositActivity
 import org.json.JSONArray
 import org.json.JSONObject
@@ -44,7 +45,7 @@ class GoPayActivity : AppCompatActivity() {
         )
     }
 
-    private fun closePupUp() {
+    private fun closePopUp() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         progressBar.visibility = ProgressBar.GONE
     }
@@ -52,6 +53,10 @@ class GoPayActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_data)
+
+        sessionUser = Session(this).getString("token").toString()
+        username = Session(this).getString("username").toString()
+        phoneNumber = Session(this).getString("phone").toString()
 
         phoneTarget = findViewById(R.id.phoneTargetEditText)
         val content: LinearLayout = findViewById(R.id.content)
@@ -75,10 +80,14 @@ class GoPayActivity : AppCompatActivity() {
 
         Timer().schedule(2000) {
             try {
-                product = ProductController.GET(phoneNumber, "0").execute().get()
+                product = ProductController.GET(username, sessionUser).execute().get()
                 if (product.getJSONObject(0).length() <= 2) {
                     runOnUiThread {
-                        Toast.makeText(applicationContext, R.string.error_404, Toast.LENGTH_LONG)
+                        Toast.makeText(
+                            applicationContext,
+                            getString(R.string.error_404),
+                            Toast.LENGTH_LONG
+                        )
                             .show()
                         finishAndRemoveTask()
                     }
@@ -86,7 +95,11 @@ class GoPayActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 e.printStackTrace()
                 runOnUiThread {
-                    Toast.makeText(applicationContext, R.string.error_404, Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        applicationContext,
+                        getString(R.string.error_404),
+                        Toast.LENGTH_LONG
+                    ).show()
                     finishAndRemoveTask()
                 }
             }
@@ -105,7 +118,7 @@ class GoPayActivity : AppCompatActivity() {
             }
 
             runOnUiThread {
-                closePupUp()
+                closePopUp()
 
                 when (phoneOperator) {
                     "GOJEK" -> for (i in 0 until productCodeGOJEK.size) {
@@ -131,7 +144,7 @@ class GoPayActivity : AppCompatActivity() {
             openPopUp()
 
             if (!validateNumber(phoneTarget.text.toString())) {
-                closePupUp()
+                closePopUp()
 
                 Toast.makeText(
                     applicationContext,
@@ -151,7 +164,7 @@ class GoPayActivity : AppCompatActivity() {
                     when {
                         response["Status"].toString() == "0" -> {
                             runOnUiThread {
-                                closePupUp()
+                                closePopUp()
                                 val goTo = Intent(
                                     applicationContext,
                                     DepositActivity::class.java
@@ -162,7 +175,7 @@ class GoPayActivity : AppCompatActivity() {
                         }
                         response["Status"].toString() == "1" -> {
                             runOnUiThread {
-                                closePupUp()
+                                closePopUp()
                                 Toast.makeText(
                                     applicationContext,
                                     response["Pesan"].toString(),
@@ -172,7 +185,7 @@ class GoPayActivity : AppCompatActivity() {
                         }
                         response["Status"].toString() == "2" -> {
                             runOnUiThread {
-                                closePupUp()
+                                closePopUp()
                                 Toast.makeText(
                                     applicationContext,
                                     getString(response["message"].toString().toInt()),
@@ -182,7 +195,7 @@ class GoPayActivity : AppCompatActivity() {
                         }
                         else -> {
                             runOnUiThread {
-                                closePupUp()
+                                closePopUp()
                                 Toast.makeText(
                                     applicationContext,
                                     getString(response["message"].toString().toInt()),

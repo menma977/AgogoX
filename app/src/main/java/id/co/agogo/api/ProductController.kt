@@ -26,12 +26,17 @@ class ProductController {
                 httpURLConnection.setRequestProperty("Accept-Language", "en-US,en;q=0.5")
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
-                val urlParameters = "a=Produk&username=$username&idlogin=$code"
+                val body = JSONObject()
+                body.put("a", "Produk")
+                body.put("username", username)
+                body.put("idlogin", code)
+
+                println(DataIInjectorController().jsonObjectToUrlEndCode(body))
 
                 // Send post request
                 httpURLConnection.doOutput = true
                 val write = DataOutputStream(httpURLConnection.outputStream)
-                write.writeBytes(urlParameters)
+                write.writeBytes(DataIInjectorController().jsonObjectToUrlEndCode(body))
                 write.flush()
                 write.close()
 

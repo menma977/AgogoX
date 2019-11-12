@@ -12,7 +12,8 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class HrlController {
-    class GET(private val username: String) : AsyncTask<Void, Void, JSONArray>() {
+    class GET(private val username: String, private val token: String) :
+        AsyncTask<Void, Void, JSONArray>() {
         override fun doInBackground(vararg params: Void?): JSONArray {
             try {
                 val userAgent = "Mozilla/5.0"
@@ -25,12 +26,17 @@ class HrlController {
                 httpURLConnection.setRequestProperty("Accept-Language", "en-US,en;q=0.5")
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
-                val urlParameters = "a=Hlr&username=${username}"
+                val body = JSONObject()
+                body.put("a", "Hlr")
+                body.put("username", username)
+                body.put("idlogin", token)
+
+                println(DataIInjectorController().jsonObjectToUrlEndCode(body))
 
                 // Send post request
                 httpURLConnection.doOutput = true
                 val write = DataOutputStream(httpURLConnection.outputStream)
-                write.writeBytes(urlParameters)
+                write.writeBytes(DataIInjectorController().jsonObjectToUrlEndCode(body))
                 write.flush()
                 write.close()
 

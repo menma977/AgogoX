@@ -1,6 +1,5 @@
 package id.co.agogo.ppob.pulsaPascabayar
 
-import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,6 +9,7 @@ import android.widget.*
 import androidx.core.text.isDigitsOnly
 import id.co.agogo.R
 import id.co.agogo.api.ppob.PaymentController
+import id.co.agogo.model.Session
 import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
@@ -22,6 +22,7 @@ class PulsaPascabayarActivity : AppCompatActivity() {
     private var sessionUser = ""
     private var username = "081211610807"
     private var phoneNumber = "081211610807"
+    private var balance = 0
     private lateinit var progressBar: ProgressBar
     private lateinit var phoneTarget: EditText
     private lateinit var idUser: EditText
@@ -39,7 +40,7 @@ class PulsaPascabayarActivity : AppCompatActivity() {
         )
     }
 
-    private fun closePupUp() {
+    private fun closePopUp() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         progressBar.visibility = ProgressBar.GONE
     }
@@ -47,6 +48,10 @@ class PulsaPascabayarActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
+
+        sessionUser = Session(this).getString("token").toString()
+        username = Session(this).getString("username").toString()
+        phoneNumber = Session(this).getString("phone").toString()
 
         productName.add("TELKOMSEL HALO")
         productName.add("XL (XPLOR)")
@@ -88,6 +93,8 @@ class PulsaPascabayarActivity : AppCompatActivity() {
         for (i in 0 until productName.size) {
             productSelection(content, content1, optionRow)
         }
+
+        closePopUp()
     }
 
     private fun generateButton(
@@ -105,14 +112,14 @@ class PulsaPascabayarActivity : AppCompatActivity() {
             openPopUp()
 
             if (!validateNumber(phoneTarget.text.toString())) {
-                closePupUp()
+                closePopUp()
                 Toast.makeText(
                     applicationContext,
                     getString(R.string.fillter_phone_number),
                     Toast.LENGTH_SHORT
                 ).show()
             } else if (!validateNumber(idUser.text.toString())) {
-                closePupUp()
+                closePopUp()
                 Toast.makeText(
                     applicationContext,
                     getString(R.string.fillter_id_user),
@@ -131,7 +138,7 @@ class PulsaPascabayarActivity : AppCompatActivity() {
                     when {
                         response["Status"].toString() == "0" -> {
                             runOnUiThread {
-                                closePupUp()
+                                closePopUp()
 //                                val goTo = Intent(
 //                                    applicationContext,
 //                                    TokenDepositActivity::class.java
@@ -142,7 +149,7 @@ class PulsaPascabayarActivity : AppCompatActivity() {
                         }
                         response["Status"].toString() == "1" -> {
                             runOnUiThread {
-                                closePupUp()
+                                closePopUp()
                                 Toast.makeText(
                                     applicationContext,
                                     response["Pesan"].toString(),
@@ -152,7 +159,7 @@ class PulsaPascabayarActivity : AppCompatActivity() {
                         }
                         response["Status"].toString() == "2" -> {
                             runOnUiThread {
-                                closePupUp()
+                                closePopUp()
                                 Toast.makeText(
                                     applicationContext,
                                     getString(response["message"].toString().toInt()),
@@ -162,7 +169,7 @@ class PulsaPascabayarActivity : AppCompatActivity() {
                         }
                         else -> {
                             runOnUiThread {
-                                closePupUp()
+                                closePopUp()
                                 Toast.makeText(
                                     applicationContext,
                                     getString(response["message"].toString().toInt()),
@@ -216,8 +223,9 @@ class PulsaPascabayarActivity : AppCompatActivity() {
             username,
             sessionUser,
             phoneTarget.text.toString(),
+            code,
             idUser.text.toString(),
-            code
+            balance.toString()
         ).execute().get()
     }
 

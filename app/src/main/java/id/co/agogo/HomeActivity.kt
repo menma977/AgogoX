@@ -11,18 +11,15 @@ import android.widget.Toast
 import id.co.agogo.ppob.pulsa.PulsaActivity
 import java.util.*
 import kotlin.concurrent.schedule
-import java.net.InetAddress
-import android.content.Context.CONNECTIVITY_SERVICE
-import androidx.core.content.ContextCompat.getSystemService
 import android.net.ConnectivityManager
-import androidx.core.app.ComponentActivity.ExtraData
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import id.co.agogo.model.Session
 import id.co.agogo.ppob.dana.DanaActivity
 import id.co.agogo.ppob.eMoneyMandiri.EMoneyMandiriActivity
 import id.co.agogo.ppob.gopay.GoPayActivity
 import id.co.agogo.ppob.grab.GrabActivity
 import id.co.agogo.ppob.ovo.OvoActivity
 import id.co.agogo.ppob.pln.PlnActivity
+import id.co.agogo.ppob.pulsaPascabayar.PulsaPascabayarActivity
 import id.co.agogo.ppob.tabCashBNI.TabCashBNIActivity
 
 
@@ -36,15 +33,17 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         progressbarHome = findViewById(R.id.progressBarHome)
+        val logoutButton: ImageButton = findViewById(R.id.logoutButton)
         val refresh: ImageButton = findViewById(R.id.refreshButton)
         val more: Button = findViewById(R.id.moreButton)
         val pln: Button = findViewById(R.id.plnButton)
         val pulsa: Button = findViewById(R.id.pulsaButton)
+        val pulsaPSC: Button = findViewById(R.id.pulsaPSCButton)
         val dana: Button = findViewById(R.id.danaButton)
         val goPay: Button = findViewById(R.id.goPayButton)
         val grab: Button = findViewById(R.id.grabButton)
         val ovo: Button = findViewById(R.id.ovoButton)
-        val e_MoneyMandiri: Button = findViewById(R.id.eMoneyMandiriButton)
+        val eMoneyMandiri: Button = findViewById(R.id.eMoneyMandiriButton)
         val tabCashBNI: Button = findViewById(R.id.tabCashBNIButton)
 
         progressbarHome.visibility = ProgressBar.VISIBLE
@@ -53,6 +52,12 @@ class HomeActivity : AppCompatActivity() {
             runOnUiThread {
                 progressbarHome.visibility = ProgressBar.GONE
             }
+        }
+
+        logoutButton.setOnClickListener {
+            Session(this).clear()
+            goTo = Intent(this, MainActivity::class.java)
+            startActivity(goTo)
         }
 
         refresh.setOnClickListener {
@@ -81,6 +86,19 @@ class HomeActivity : AppCompatActivity() {
         pulsa.setOnClickListener {
             if (isNetworkConnected()) {
                 goTo = Intent(this, PulsaActivity::class.java)
+                startActivity(goTo)
+            } else {
+                Toast.makeText(
+                    this,
+                    "anda berada di koenksi yang tidak setabil",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        pulsaPSC.setOnClickListener {
+            if (isNetworkConnected()) {
+                goTo = Intent(this, PulsaPascabayarActivity::class.java)
                 startActivity(goTo)
             } else {
                 Toast.makeText(
@@ -143,7 +161,7 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
-        e_MoneyMandiri.setOnClickListener {
+        eMoneyMandiri.setOnClickListener {
             if (isNetworkConnected()) {
                 goTo = Intent(this, EMoneyMandiriActivity::class.java)
                 startActivity(goTo)

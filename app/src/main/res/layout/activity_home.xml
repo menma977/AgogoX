@@ -195,6 +195,7 @@
                     android:textSize="12sp" />
 
                 <Button
+                    android:id="@+id/pulsaPSCButton"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

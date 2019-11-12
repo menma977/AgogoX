@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import id.co.agogo.model.Session
 
 class MainActivity : AppCompatActivity() {
     private lateinit var login: Button
@@ -20,6 +21,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         doRequestPermission()
+
+        if (doRequestPermission()) {
+            if (!Session(this).getString("token").isNullOrEmpty()) {
+                val goTo = Intent(this, HomeActivity::class.java)
+                finishAndRemoveTask()
+                startActivity(goTo)
+            }
+        }
 
         login = findViewById(R.id.loginButton)
         version = findViewById(R.id.version)
@@ -37,8 +46,8 @@ class MainActivity : AppCompatActivity() {
         login.setOnClickListener {
             doRequestPermission()
             if (doRequestPermission()) {
-//                val goTo = Intent(this, LoginActivity::class.java)
-                val goTo = Intent(this, HomeActivity::class.java)
+                val goTo = Intent(this, LoginActivity::class.java)
+//                val goTo = Intent(this, HomeActivity::class.java)
                 finishAndRemoveTask()
                 startActivity(goTo)
             } else {
