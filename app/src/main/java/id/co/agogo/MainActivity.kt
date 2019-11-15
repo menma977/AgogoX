@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         versionName = try {
             val pInfo = this.packageManager.getPackageInfo(packageName, 0)
             "${this.getString(R.string.version)} ${pInfo.versionName}"
-        } catch (e: PackageManager.NameNotFoundException) {
+        } catch (e: Exception) {
             e.printStackTrace()
             "${this.getString(R.string.version)} 0"
         }

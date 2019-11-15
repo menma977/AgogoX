@@ -16,7 +16,7 @@
     <string name="payment_title">Payment confirmation</string>
     <string name="phone_number">Phone number</string>
     <string name="price">Price</string>
-    <string name="pulsa">pulse</string>
+    <string name="pulsa">Pulse</string>
     <string name="pulsa_pascabayar">Postpaid Credit</string>
     <string name="register">Registration</string>
     <string name="remaining_balance">The remaining balance</string>
@@ -26,4 +26,6 @@
     <string name="id_user">Customer ID</string>
     <string name="fillter_id_user">The Customer ID cannot be blank and can only be numbers</string>
     <string name="fillter_phone_number">Phone Number cannot be empty and only numbers</string>
+    <string name="button_image_product">button image product</string>
+    <string name="credit">Credit</string>
 </resources>

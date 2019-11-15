@@ -83,6 +83,5 @@ class HrlController {
                 return JSONArray("[{Status: 1, Pesan: '${R.string.error_404}'}, {Status: 1, Pesan: '${R.string.error_404}'}]")
             }
         }
-
     }
 }

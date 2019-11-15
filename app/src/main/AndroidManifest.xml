@@ -24,7 +24,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".ppob.pulsaPascabayar.PulsaPascabayarActivity"></activity>
+        <activity android:name=".ppob.payment.PaymentDepositActivity"></activity>
+        <activity android:name=".ppob.pulsaPascabayar.PulsaPascabayarActivity" />
         <activity
             android:name=".ppob.eMoneyMandiri.EMoneyMandiriActivity"
             android:label="@string/e_money_mandiri">

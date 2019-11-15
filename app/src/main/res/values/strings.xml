@@ -35,7 +35,7 @@
 
     <!-- ppob -->
     <string name="pln" translatable="false">PLN</string>
-    <string name="pulsa">pulsa</string>
+    <string name="pulsa">Pulsa</string>
     <string name="pulsa_pascabayar">Pulsa Pascabayar</string>
     <string name="tv_kabel" translatable="false">TV Kabel</string>
     <string name="go_pay" translatable="false">GoPay</string>
@@ -46,6 +46,7 @@
     <string name="e_money_mandiri" translatable="false">E-Money Mandiri</string>
     <string name="insurance" translatable="false">Insurance</string>
     <string name="bpjs" translatable="false">BPJS</string>
-    <string name="finance" translatable="false">Finance</string>
+    <string name="credit">Kredit</string>
+    <string name="button_image_product">produk gambar tombol</string>
     <!-- /ppob -->
 </resources>

@@ -1,5 +1,6 @@
 package id.co.agogo.ppob.pulsaPascabayar
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,6 +11,7 @@ import androidx.core.text.isDigitsOnly
 import id.co.agogo.R
 import id.co.agogo.api.ppob.PaymentController
 import id.co.agogo.model.Session
+import id.co.agogo.ppob.payment.PaymentDepositActivity
 import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
@@ -139,11 +141,11 @@ class PulsaPascabayarActivity : AppCompatActivity() {
                         response["Status"].toString() == "0" -> {
                             runOnUiThread {
                                 closePopUp()
-//                                val goTo = Intent(
-//                                    applicationContext,
-//                                    TokenDepositActivity::class.java
-//                                ).putExtra("response", response.toString())
-//                                startActivity(goTo)
+                                val goTo = Intent(
+                                    applicationContext,
+                                    PaymentDepositActivity::class.java
+                                ).putExtra("response", response.toString())
+                                startActivity(goTo)
                                 finishAndRemoveTask()
                             }
                         }

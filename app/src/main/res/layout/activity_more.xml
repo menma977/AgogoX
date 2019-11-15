@@ -13,128 +13,373 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="true"
             android:gravity="center"
             android:orientation="horizontal">
 
-            <Button
-                style="?android:attr/borderlessButtonStyle"
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@color/Link"
-                android:drawableTop="@drawable/ic_launcher_background"
-                android:text="@string/pln"
-                android:textSize="12sp" />
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <Button
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="1"
-                android:background="@color/Link"
-                android:drawableTop="@drawable/ic_launcher_background"
-                android:text="@string/pulsa"
-                android:textSize="12sp" />
+                <ImageButton
+                    android:id="@+id/plnButton"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_default"
+                    android:contentDescription="@string/button_image_product"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_pln"/>
 
-            <Button
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="1"
-                android:background="@color/Link"
-                android:drawableTop="@drawable/ic_launcher_background"
-                android:text="@string/tv_kabel"
-                android:textSize="12sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="@string/pln"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold" />
 
-            <Button
-                style="?android:attr/borderlessButtonStyle"
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@color/Link"
-                android:drawableTop="@drawable/ic_launcher_background"
-                android:text="@string/pulsa_pascabayar"
-                android:textSize="12sp" />
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/pulsaButton"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_default"
+                    android:contentDescription="@string/button_image_product"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_pulsa" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="@string/pulsa"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/tvButton"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_default"
+                    android:contentDescription="@string/button_image_product"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_tv_kabel" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="@string/tv_kabel"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/pulsaPSCButton"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_default"
+                    android:contentDescription="@string/button_image_product"
+                    android:padding="10dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_pulsa_pascbayar" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="@string/pulsa_pascabayar"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="true"
             android:gravity="center"
             android:orientation="horizontal">
 
-            <Button
-                style="?android:attr/borderlessButtonStyle"
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@color/Link"
-                android:drawableTop="@drawable/ic_launcher_background"
-                android:text="@string/pln"
-                android:textSize="12sp" />
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <Button
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="1"
-                android:background="@color/Link"
-                android:drawableTop="@drawable/ic_launcher_background"
-                android:text="@string/pulsa"
-                android:textSize="12sp" />
+                <ImageButton
+                    android:id="@+id/goPayButton"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_default"
+                    android:contentDescription="@string/button_image_product"
+                    android:padding="10dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_gopay" />
 
-            <Button
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="1"
-                android:background="@color/Link"
-                android:drawableTop="@drawable/ic_launcher_background"
-                android:text="@string/tv_kabel"
-                android:textSize="12sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="@string/go_pay"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold" />
 
-            <Button
-                style="?android:attr/borderlessButtonStyle"
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@color/Link"
-                android:drawableTop="@drawable/ic_launcher_background"
-                android:text="@string/pulsa_pascabayar"
-                android:textSize="12sp" />
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/grabButton"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_default"
+                    android:contentDescription="@string/button_image_product"
+                    android:padding="10dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_grab" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="@string/grab"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/ovoButton"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_default"
+                    android:contentDescription="@string/button_image_product"
+                    android:padding="10dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_grab" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="@string/ovo"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/danaButton"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_default"
+                    android:contentDescription="@string/button_image_product"
+                    android:padding="10dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_dana" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="@string/dana"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/eMoneyMandiriButton"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_default"
+                    android:contentDescription="@string/button_image_product"
+                    android:padding="10dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_emoney" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="@string/e_money_mandiri"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/tabCashBNIButton"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_default"
+                    android:contentDescription="@string/button_image_product"
+                    android:padding="10dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_tap_cash" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="@string/tab_cash_bni"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/financeButton"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_default"
+                    android:contentDescription="@string/button_image_product"
+                    android:padding="10dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_finance" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="@string/credit"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/moreButton"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_default"
+                    android:contentDescription="@string/button_image_product"
+                    android:padding="10dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_more" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="@string/more"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

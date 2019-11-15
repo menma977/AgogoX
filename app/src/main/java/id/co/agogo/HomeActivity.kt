@@ -4,14 +4,12 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ProgressBar
-import android.widget.Toast
 import id.co.agogo.ppob.pulsa.PulsaActivity
 import java.util.*
 import kotlin.concurrent.schedule
 import android.net.ConnectivityManager
+import android.widget.*
+import id.co.agogo.api.BalanceController
 import id.co.agogo.model.Session
 import id.co.agogo.ppob.dana.DanaActivity
 import id.co.agogo.ppob.eMoneyMandiri.EMoneyMandiriActivity
@@ -21,15 +19,17 @@ import id.co.agogo.ppob.ovo.OvoActivity
 import id.co.agogo.ppob.pln.PlnActivity
 import id.co.agogo.ppob.pulsaPascabayar.PulsaPascabayarActivity
 import id.co.agogo.ppob.tabCashBNI.TabCashBNIActivity
+import java.text.NumberFormat
 
 /**
- *
  * @property goTo Intent?
+ * @property session Session
  * @property progressbarHome ProgressBar
  */
 class HomeActivity : AppCompatActivity() {
 
     private var goTo: Intent? = null
+    private lateinit var session: Session
     private lateinit var progressbarHome: ProgressBar
 
     /**
@@ -39,21 +39,33 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        session = Session(this)
+
+        val idr = Locale("in", "ID")
+        val numberFormat = NumberFormat.getCurrencyInstance(idr)
+
         progressbarHome = findViewById(R.id.progressBarHome)
+        val balance: TextView = findViewById(R.id.balanceTextView)
         val logoutButton: ImageButton = findViewById(R.id.logoutButton)
         val refresh: ImageButton = findViewById(R.id.refreshButton)
-        val more: Button = findViewById(R.id.moreButton)
-        val pln: Button = findViewById(R.id.plnButton)
-        val pulsa: Button = findViewById(R.id.pulsaButton)
-        val pulsaPSC: Button = findViewById(R.id.pulsaPSCButton)
-        val dana: Button = findViewById(R.id.danaButton)
-        val goPay: Button = findViewById(R.id.goPayButton)
-        val grab: Button = findViewById(R.id.grabButton)
-        val ovo: Button = findViewById(R.id.ovoButton)
-        val eMoneyMandiri: Button = findViewById(R.id.eMoneyMandiriButton)
-        val tabCashBNI: Button = findViewById(R.id.tabCashBNIButton)
+        val more: ImageButton = findViewById(R.id.moreButton)
+        val pln: ImageButton = findViewById(R.id.plnButton)
+        val pulsa: ImageButton = findViewById(R.id.pulsaButton)
+        val pulsaPSC: ImageButton = findViewById(R.id.pulsaPSCButton)
+        val dana: ImageButton = findViewById(R.id.danaButton)
+        val goPay: ImageButton = findViewById(R.id.goPayButton)
+        val grab: ImageButton = findViewById(R.id.grabButton)
+        val ovo: ImageButton = findViewById(R.id.ovoButton)
+        val eMoneyMandiri: ImageButton = findViewById(R.id.eMoneyMandiriButton)
+        val tabCashBNI: ImageButton = findViewById(R.id.tabCashBNIButton)
 
         progressbarHome.visibility = ProgressBar.VISIBLE
+
+        Timer().schedule(500, 5000) {
+            runOnUiThread {
+                balance.text = numberFormat.format(getBalance())
+            }
+        }
 
         Timer().schedule(1000) {
             runOnUiThread {
@@ -65,6 +77,7 @@ class HomeActivity : AppCompatActivity() {
             Session(this).clear()
             goTo = Intent(this, MainActivity::class.java)
             startActivity(goTo)
+            finishAndRemoveTask()
         }
 
         refresh.setOnClickListener {
@@ -72,6 +85,7 @@ class HomeActivity : AppCompatActivity() {
 
             Timer().schedule(1000) {
                 runOnUiThread {
+                    balance.text = numberFormat.format(getBalance())
                     progressbarHome.visibility = ProgressBar.GONE
                 }
             }
@@ -201,12 +215,27 @@ class HomeActivity : AppCompatActivity() {
     }
 
     /**
-     *
      * @return Boolean
      */
     private fun isNetworkConnected(): Boolean {
         val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
         return cm.activeNetworkInfo != null && cm.activeNetworkInfo.isConnected
+    }
+
+    /**
+     * @return Int
+     */
+    private fun getBalance(): Int {
+        val response = BalanceController.Get(
+            session.getString("username").toString(),
+            session.getString("token").toString()
+        ).execute().get()
+        return if (response["Status"].toString() == "0") {
+            val balance = response["Saldo"].toString().replace(".", "")
+            balance.toInt()
+        } else {
+            0
+        }
     }
 }

@@ -64,6 +64,7 @@ class DepositActivity : AppCompatActivity() {
             remainingBalanceTextView.text =
                 numberFormat.format(responseIntent["SisaSaldo"].toString().toInt())
         } catch (e: Exception) {
+            e.printStackTrace()
             finishAndRemoveTask()
             Toast.makeText(
                 this,
